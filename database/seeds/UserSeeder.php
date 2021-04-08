@@ -25,20 +25,28 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
+                'nama' => 'Dr. John',
+                'no_hp' => '081234567879',
+                'email' => 'john@email.com',
+                'password' => Hash::make('123'),
+                'role_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
                 'nama' => 'Pasien 1',
                 'no_hp' => '081234567899',
                 'email' => 'pasien1@email.com',
                 'password' => Hash::make('321'),
-                'role_id' => 2,
+                'role_id' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
         ]);
 
-        User::find(2)->detail()->create([
+        User::find(3)->pasien()->create([
             'tanggal_lahir' => Carbon::create(1999, 10, 15),
-            'alamat' => 'Jl. Jalan No. 8',
-            'saldo' => 100000
+            'alamat' => 'Jl. Jalan No. 8'
         ]);
     }
 }

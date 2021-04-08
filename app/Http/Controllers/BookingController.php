@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,9 +20,16 @@ class BookingController extends Controller
     {
         $bookings = Booking::with('service')
             ->where('user_id', Auth::user()->id)
-            ->orderBy('id', 'DESC')
-            ->paginate(10);
+            ->orderBy('id', 'DESC');
+
         return view('app.booking.index', ['bookings' => $bookings]);
+    }
+
+    public function indexAdmin()
+    {
+        $bookings = Booking::with(['jadwal.dokter', 'pasien.user', 'service'])->get();
+
+        return view('admin.booking.index', ['bookings' => $bookings]);
     }
 
     /**
@@ -31,9 +39,9 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $services = Service::all();
+        $dokters = User::with('service')->where('role_id', 2)->get();
 
-        return view('app.booking.create', ['services' => $services]);
+        return view('app.booking.create', ['dokters' => $dokters]);
     }
 
     /**
@@ -60,11 +68,22 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $booking = Booking::with('service')->find($id);
+        $booking = Booking::with(['pasien.user', 'jadwal.dokter.service'])->find($id);
+        $tanggal = Carbon::create($booking->jadwal->start)->toDateString();
+        $start = Carbon::create($booking->jadwal->start)->toTimeString();
+        $end = Carbon::create($booking->jadwal->end)->toTimeString();
 
-        return view('app.booking.show', ['booking' => $booking]);
+        return view($request->tipe === 'pasien' ? 'app.booking.show' : 'admin.booking.show', [
+            'dokter' => $booking->jadwal->dokter,
+            'pasien' => $booking->pasien,
+            'jadwal' => $booking->jadwal,
+            'tanggal' => $tanggal,
+            'start' => $start,
+            'end' => $end,
+            'slot' => $booking->jadwal->slot,
+        ]);
     }
 
     /**

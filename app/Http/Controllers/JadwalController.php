@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dokter;
 use App\Models\Jadwal;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -15,10 +15,9 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $dokters = Dokter::all();
         $jadwals = Jadwal::with('dokter')->get();
 
-        return view('admin.jadwal.index', ['dokters' => $dokters, 'jadwals' => $jadwals]);
+        return view('admin.jadwal.index', ['jadwals' => $jadwals]);
     }
 
     /**
@@ -28,7 +27,7 @@ class JadwalController extends Controller
      */
     public function create(Request $request)
     {
-        $dokters = Dokter::all();
+        $dokters = User::with('service')->where('role_id', 2)->get();
         $waktu = [$request->start, $request->end];
 
         return view('admin.jadwal.create', ['dokters' => $dokters, 'waktu' => $waktu]);
@@ -55,7 +54,7 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        $dokter = Dokter::find($request->dokter);
+        $dokter = User::find($request->dokter);
         $dokter->jadwal()->create([
             'start' => $request->start,
             'end' => $request->end,

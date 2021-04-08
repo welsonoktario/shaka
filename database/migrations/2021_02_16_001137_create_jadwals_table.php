@@ -15,12 +15,13 @@ class CreateJadwalsTable extends Migration
     {
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dokter_id')
+            $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->date('tanggal');
+            $table->time('start');
+            $table->time('end');
             $table->integer('slot');
         });
     }

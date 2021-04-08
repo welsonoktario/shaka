@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dokter;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DokterController extends Controller
 {
@@ -15,7 +16,7 @@ class DokterController extends Controller
      */
     public function index()
     {
-        $dokters = Dokter::with('service')->get();
+        $dokters = User::with('service')->where('role_id', 2)->get();
 
         return view('admin.dokter.index', ['dokters' => $dokters]);
     }
@@ -40,8 +41,12 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
-        $dokter = Dokter::create([
-            'nama' => $request->nama
+        $dokter = User::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make('12345'),
+            'no_hp' => $request->hp,
+            'role_id' => 2,
         ]);
 
         $dokter->service()->attach($request->services);
@@ -57,7 +62,7 @@ class DokterController extends Controller
      */
     public function show($id)
     {
-        $dokter = Dokter::with(['service', 'jadwal'])->find($id);
+        $dokter = User::with(['service', 'jadwal'])->find($id);
 
         return view('admin.dokter.show', ['dokter' => $dokter]);
     }
@@ -70,7 +75,7 @@ class DokterController extends Controller
      */
     public function edit($id)
     {
-        $dokter = Dokter::find($id);
+        $dokter = User::find($id);
         $servisDokter = $dokter->service()->pluck('id')->toArray();
         $services = Service::all();
 
@@ -86,7 +91,7 @@ class DokterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dokter = Dokter::find($id);
+        $dokter = User::find($id);
         $dokter->service()->sync($request->services);
         $dokter->update([
             'nama' => $request->nama
@@ -103,7 +108,7 @@ class DokterController extends Controller
      */
     public function destroy($id)
     {
-        Dokter::find($id)->destroy();
+        User::find($id)->destroy();
 
         return redirect()->route('admin.dokter.index');
     }

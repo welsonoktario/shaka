@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Dokter;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nama', 'email', 'password', 'role_id'
+        'nama', 'email', 'password', 'role_id', 'no_hp'
     ];
 
     /**
@@ -43,18 +44,18 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function detail()
+    public function pasien()
     {
-        return $this->hasOne(UserDetail::class);
+        return $this->hasOne(Pasien::class);
     }
 
-    public function booking()
+    public function service()
     {
-        return $this->hasMany(Booking::class);
+        return $this->belongsToMany(Service::class, 'dokter_service');
     }
 
-    public function deposit()
+    public function jadwal()
     {
-        return $this->hasMany(Deposit::class);
+        return $this->hasMany(Jadwal::class);
     }
 }

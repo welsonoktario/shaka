@@ -10,7 +10,7 @@
             <a class="nav-link{{ Route::currentRouteName() === 'admin.jadwa.index' ? ' active' : '' }}" href="{{ route('admin.jadwal.index') }}">Jadwal</a>
         </li>
         <li class="nav-item my-1">
-            <a class="nav-link{{ Route::currentRouteName() === 'admin.booking' ? ' active' : '' }}" href="{{ route('admin.booking') }}">Booking</a>
+            <a class="nav-link{{ Route::currentRouteName() === 'admin.booking.index' ? ' active' : '' }}" href="{{ route('admin.booking.index') }}">Booking</a>
         </li>
     </ul>
 </div>

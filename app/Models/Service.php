@@ -8,7 +8,7 @@ class Service extends Model
 {
     public function dokter()
     {
-        return $this->belongsToMany(Dokter::class, 'dokter_service');
+        return $this->belongsToMany(User::class, 'dokter_service');
     }
 
     public function booking()

@@ -19,7 +19,7 @@ class CreateTransaksisTable extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->integer('total');
-            $table->dateTime('tanggal');
+            $table->dateTime('tanggal')->useCurrent();
         });
     }
 

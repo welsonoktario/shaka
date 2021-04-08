@@ -19,15 +19,13 @@ class CreateBookingsTable extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->foreignId('user_id')
-                ->nullable()
+            $table->foreignId('pasien_id')
                 ->constrained()
                 ->cascadeOnDelete();
             $table->foreignId('service_id')
-                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->enum('metode_pembayaran', ['Cash', 'Non-Cash'])->nullable();
+            $table->dateTime('tanggal')->useCurrent();
         });
     }
 

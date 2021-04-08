@@ -14,7 +14,7 @@ class CreateDokterServiceTable extends Migration
     public function up()
     {
         Schema::create('dokter_service', function (Blueprint $table) {
-            $table->foreignId('dokter_id')
+            $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
@@ -32,6 +32,6 @@ class CreateDokterServiceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dokter_service');
+        Schema::dropIfExists('user_service');
     }
 }

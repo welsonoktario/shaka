@@ -14,9 +14,14 @@ class Booking extends Model
         return $this->hasOne(Transaksi::class);
     }
 
-    public function user()
+    public function jadwal()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Jadwal::class);
+    }
+
+    public function pasien()
+    {
+        return $this->belongsTo(Pasien::class);
     }
 
     public function service()
