@@ -35,12 +35,11 @@
             const events = jadwals.map((jadwal) => {
                 return {
                     id: jadwal.id,
-                    start: jadwal.start,
-                    end: jadwal.end,
+                    start: `${jadwal.tanggal} ${jadwal.start}`,
+                    end: `${jadwal.tanggal} ${jadwal.end}`,
                     title: `${jadwal.dokter.nama} (${jadwal.slot} slot)`,
-                    bg: `hsla(${Math.random() * 360}, 100%, 50%, 1)`,
                 }
-            })
+            });
             const calendar = new FullCalendar.Calendar($("#calendarJadwal")[0], {
                 plugins: [interactionPlugin, timeGridPlugin],
                 initialView: 'timeGridWeek',
@@ -62,8 +61,9 @@
                 select: function(cell) {
                     const start = moment(cell.startStr).format('YYYY-MM-DD HH:mm');
                     const end = moment(cell.endStr).format('YYYY-MM-DD HH:mm');
+                    const tanggal = moment(cell.endStr).format('YYYY-MM-DD');
 
-                    $.get(`jadwal/create?start=${start}&end=${end}`, function(res) {
+                    $.get(`jadwal/create?start=${start}&end=${end}&tanggal=${tanggal}`, function(res) {
                         $('#modalJadwalContent').html(res);
                         $('#modalJadwal').modal('show');
                     });
@@ -74,16 +74,15 @@
                 eventDrop: function(cell) {
                     const start = moment(cell.event.startStr).format('YYYY-MM-DD HH:mm');
                     const end = moment(cell.event.endStr).format('YYYY-MM-DD HH:mm');
+                    const tanggal = moment(cell.event.endStr).format('YYYY-MM-DD');
 
                     $.ajax({
                         url: `jadwal/${cell.event.id}`,
                         type: 'PUT',
                         data: {
                             start,
-                            end
-                        },
-                        success: function(res) {
-                            console.log(res);
+                            end,
+                            tanggal
                         }
                     });
                 },
@@ -91,16 +90,15 @@
                     console.log(cell.event);
                     const start = moment(cell.event.startStr).format('YYYY-MM-DD HH:mm');
                     const end = moment(cell.event.endStr).format('YYYY-MM-DD HH:mm');
+                    const tanggal = moment(cell.event.endStr).format('YYYY-MM-DD');
 
                     $.ajax({
                         url: `jadwal/${cell.event.id}`,
                         type: 'PUT',
                         data: {
                             start,
-                            end
-                        },
-                        success: function(res) {
-                            console.log(res);
+                            end,
+                            tanggal
                         }
                     });
                 },

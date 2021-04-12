@@ -6,6 +6,7 @@
         </div>
         <div class="modal-body">
             @csrf
+            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
             <div class="mb-3">
                 <label for="dokter" class="form-label">Dokter</label>
                 <select name="dokter" class="form-control" id="dokter" required>

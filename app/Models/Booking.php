@@ -14,9 +14,9 @@ class Booking extends Model
         return $this->hasOne(Transaksi::class);
     }
 
-    public function jadwal()
+    public function slot()
     {
-        return $this->belongsTo(Jadwal::class);
+        return $this->belongsTo(Slot::class);
     }
 
     public function pasien()

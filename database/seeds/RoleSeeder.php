@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -19,7 +18,5 @@ class RoleSeeder extends Seeder
             ['nama' => 'Dokter', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['nama' => 'Pasien', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
-
-        User::find(2)->service()->attach([1, 2, 3]);
     }
 }

@@ -30,7 +30,7 @@ class JadwalController extends Controller
         $dokters = User::with('service')->where('role_id', 2)->get();
         $waktu = [$request->start, $request->end];
 
-        return view('admin.jadwal.create', ['dokters' => $dokters, 'waktu' => $waktu]);
+        return view('admin.jadwal.create', ['dokters' => $dokters, 'waktu' => $waktu, 'tanggal' => $request->tanggal]);
     }
 
     /**
@@ -55,11 +55,20 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         $dokter = User::find($request->dokter);
-        $dokter->jadwal()->create([
+        $slots = [];
+
+        for ($i = 0; $i < $request->slot; $i++) {
+            $slots[$i] = ['nomor' => $i + 1];
+        }
+
+        $jadwal = $dokter->jadwal()->create([
             'start' => $request->start,
             'end' => $request->end,
+            'tanggal' => $request->tanggal,
             'slot' => $request->slot,
         ]);
+
+        $jadwal->slot()->insert($slots);
 
         return redirect()->route('admin.jadwal.index');
     }
@@ -76,7 +85,8 @@ class JadwalController extends Controller
         $jadwal = Jadwal::find($id);
         $jadwal->update([
             'start' => $request->start,
-            'end' => $request->end
+            'end' => $request->end,
+            'tanggal' => $request->tanggal,
         ]);
 
         return $jadwal;

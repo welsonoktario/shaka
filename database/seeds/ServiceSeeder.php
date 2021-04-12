@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -35,5 +36,7 @@ class ServiceSeeder extends Seeder
                 ]
             ]
         );
+
+        User::find(2)->service()->attach([1, 2, 3]);
     }
 }
