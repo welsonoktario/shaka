@@ -22,7 +22,7 @@ class CreateJadwalsTable extends Migration
             $table->date('tanggal');
             $table->time('start');
             $table->time('end');
-            $table->integer('slot');
+            $table->integer('jumlah_slot');
         });
     }
 

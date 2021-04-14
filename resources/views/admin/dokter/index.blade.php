@@ -33,7 +33,19 @@
     </div>
 
     <div id="modalDokter" class="modal fade" tabindex="-1">
-        <div id="modalDokterContent" class="modal-dialog"></div>
+        <div class="modal-dialog">
+            <div id="modalDokterContent" class="modal-content">
+                <div id="modalLoading" class="row h-100 align-items-center">
+                    <div class="col align-self-center">
+                        <div class="d-flex my-5 justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -41,17 +53,23 @@
     <script>
         $(document).ready(function () {
             $('#btnTambahDokter').click(function () {
+                $('#modalDokter').modal('show');
+                $('#modalDokterContent').html('');
+                $('#modalLoading').show();
                 $.get(`dokter/create`, function (res) {
-                    $('#modalDokterContent').html(res);
-                    $('#modalDokter').modal('show');
+                    $('#modalLoading').hide();
+                    $('#modalDokterContent').append(res);
                 });
             });
 
             $('#listDokter #btnEditDokter').click(function() {
                 const id = $(this).data('id');
+                $('#modalDokter').modal('show');
+                $('#modalDokterContent').html('');
+                $('#modalLoading').show();
                 $.get(`dokter/${id}/edit`, function (res) {
+                    $('#modalLoading').hide();
                     $('#modalDokterContent').html(res);
-                    $('#modalDokter').modal('show');
                 });
             });
 

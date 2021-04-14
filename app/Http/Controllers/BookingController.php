@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\Jadwal;
+use App\Models\Role;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,7 +29,7 @@ class BookingController extends Controller
 
     public function indexAdmin()
     {
-        $bookings = Booking::with(['jadwal.dokter', 'pasien.user', 'service'])->get();
+        $bookings = Booking::with(['slot.jadwal.dokter', 'pasien.user', 'service'])->get();
 
         return view('admin.booking.index', ['bookings' => $bookings]);
     }
@@ -39,9 +41,14 @@ class BookingController extends Controller
      */
     public function create()
     {
+        $user = User::with('role')->find(Auth::id());
         $dokters = User::with('service')->where('role_id', 2)->get();
 
-        return view('app.booking.create', ['dokters' => $dokters]);
+        if ($user->role->id === 1) {
+            return view('admin.booking.create', ['dokters' => $dokters]);
+        } else {
+            return view('app.booking.create', ['dokters' => $dokters]);
+        }
     }
 
     /**
@@ -70,19 +77,19 @@ class BookingController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $booking = Booking::with(['pasien.user', 'jadwal.dokter.service'])->find($id);
-        $tanggal = Carbon::create($booking->jadwal->start)->toDateString();
-        $start = Carbon::create($booking->jadwal->start)->toTimeString();
-        $end = Carbon::create($booking->jadwal->end)->toTimeString();
+        $booking = Booking::with(['pasien.user', 'slot.jadwal.dokter.service'])->find($id);
+        $tanggal = Carbon::create($booking->slot->jadwal->start)->toDateString();
+        $start = Carbon::create($booking->slot->jadwal->start)->toTimeString();
+        $end = Carbon::create($booking->slot->jadwal->end)->toTimeString();
 
         return view($request->tipe === 'pasien' ? 'app.booking.show' : 'admin.booking.show', [
-            'dokter' => $booking->jadwal->dokter,
+            'dokter' => $booking->slot->jadwal->dokter,
             'pasien' => $booking->pasien,
-            'jadwal' => $booking->jadwal,
+            'jadwal' => $booking->slot->jadwal,
             'tanggal' => $tanggal,
             'start' => $start,
             'end' => $end,
-            'slot' => $booking->jadwal->slot,
+            'slot' => $booking->slot->jadwal->jumlah_slot,
         ]);
     }
 
@@ -127,5 +134,11 @@ class BookingController extends Controller
         $booking->delete();
 
         return redirect('/booking');
+    }
+
+    public function slotJadwal($id) {
+        $slots = Jadwal::with(['slot.booking'])->find($id);
+
+        return $slots->toJson();
     }
 }

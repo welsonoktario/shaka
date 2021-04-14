@@ -1,38 +1,40 @@
-<div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title">Tambah Booking</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
+<div class="modal-header">
+    <h5 class="modal-title">Tambah Booking</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form action="{{ route('admin.booking.store') }}" method="POST">
     <div class="modal-body">
-        <form action="{{ route('admin.booking.store') }}" method="POST">
-            @csrf
-            <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input type="text" name="nama" class="form-control" id="nama">
-            </div>
-            <div class="mb-3">
-                <label for="nama" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email">
-            </div>
-            <div class="mb-3">
-                <label for="nama" class="form-label">No. HP</label>
-                <input type="tel" name="hp" class="form-control" id="hp">
-            </div>
-            <div class="mb-3">
-                <label class="from-label">Dokter</label>
+        @csrf
+        <div class="mb-3">
+            <label class="from-label">Dokter</label>
+            <select id="selectDokter" class="form-select form-control" required>
+                <option selected disabled>Pilih dokter</option>
                 @foreach ($dokters as $dokter)
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="services[]" value="{{ $service->id }}" id="service{{ $service->id }}">
-                        <label class="form-check-label" for="service{{ $service->id }}">
-                            {{ $service->nama }}
-                        </label>
-                    </div>
+                    <option value="{{ $dokter->id }}">{{ $dokter->nama }}</option>
                 @endforeach
-            </div>
-            <button class="btn btn-primary" type="submit">Tambah</button>
-        </form>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="from-label">Service</label>
+            <select id="selectService" class="form-select form-control" required>
+                <option selected disabled>Pilih service</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="from-label">Jadwal</label>
+            <select id="selectJadwal" class="form-select form-control" required>
+                <option selected disabled>Pilih jadwal</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="from-label">Slot</label>
+            <select id="selectSlot" class="form-select form-control" required>
+                <option selected disabled>Pilih slot</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">Tambah</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
     </div>
-</div>
+</form>

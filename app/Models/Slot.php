@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slot extends Model
 {
-    protected $fillable = ['nomor', 'pasien_id'];
+    protected $fillable = ['nomor', 'jadwal_id', 'pasien_id'];
     public $timestamps = false;
 
     public function jadwal()
@@ -14,8 +14,8 @@ class Slot extends Model
         return $this->belongsTo(Jadwal::class);
     }
 
-    public function pasien()
+    public function booking()
     {
-        return $this->belongsTo(Pasien::class);
+        return $this->hasOne(Booking::class);
     }
 }

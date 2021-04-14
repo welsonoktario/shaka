@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwal;
+use App\Models\Slot;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class JadwalController extends Controller
      */
     public function show($id)
     {
-        $jadwal = Jadwal::with(['dokter', 'booking.user'])->find($id);
+        $jadwal = Jadwal::with(['dokter', 'slot.booking.pasien'])->find($id);
 
         return view('admin.jadwal.show', ['jadwal' => $jadwal]);
     }
@@ -57,18 +58,18 @@ class JadwalController extends Controller
         $dokter = User::find($request->dokter);
         $slots = [];
 
-        for ($i = 0; $i < $request->slot; $i++) {
-            $slots[$i] = ['nomor' => $i + 1];
-        }
-
         $jadwal = $dokter->jadwal()->create([
             'start' => $request->start,
             'end' => $request->end,
             'tanggal' => $request->tanggal,
-            'slot' => $request->slot,
+            'jumlah_slot' => $request->slot,
         ]);
 
-        $jadwal->slot()->insert($slots);
+        for ($i = 0; $i < $request->slot; $i++) {
+            $slots[$i] = ['jadwal_id' => $jadwal->id, 'nomor' => $i + 1];
+        }
+
+        Slot::insert($slots);
 
         return redirect()->route('admin.jadwal.index');
     }

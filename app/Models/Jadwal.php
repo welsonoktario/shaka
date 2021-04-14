@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-    protected $fillable = ['start', 'end', 'tanggal', 'slot'];
+    protected $fillable = ['start', 'end', 'tanggal', 'jumlah_slot'];
     public $timestamps = false;
 
     public function dokter()

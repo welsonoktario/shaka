@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
     Route::resource('dokter', 'DokterController', ['as' => 'admin']);
     Route::resource('jadwal', 'JadwalController', ['as' => 'admin']);
     Route::get('booking', 'BookingController@indexAdmin')->name('admin.booking.index');
+    Route::get('booking/slot-jadwal/{id}', 'BookingController@slotJadwal')->name('admin.booking.slotJadwal');
     Route::resource('booking', 'BookingController', ['as' => 'admin'])->except(['index']);
 });
 
