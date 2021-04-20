@@ -6,12 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    protected $fillable = ['waktu', 'metode_pembayaran', 'service_id'];
+    protected $fillable = ['slot_id', 'pasien_id', 'service_id', 'tanggal'];
     public $timestamps = false;
 
     public function transaksi()
     {
         return $this->hasOne(Transaksi::class);
+    }
+
+    public function bookingManual()
+    {
+        return $this->hasOne(BookingManual::class);
     }
 
     public function slot()

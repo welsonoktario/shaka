@@ -6,6 +6,14 @@
     <div class="modal-body">
         @csrf
         <div class="mb-3">
+            <label class="form-label" for="nama">Nama</label>
+            <input class="form-control" type="text" name="nama" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="hp">No HP</label>
+            <input class="form-control" type="tel" name="hp" />
+        </div>
+        <div class="mb-3">
             <label class="from-label">Dokter</label>
             <select id="selectDokter" class="form-select form-control" required>
                 <option selected disabled>Pilih dokter</option>
@@ -16,7 +24,7 @@
         </div>
         <div class="mb-3">
             <label class="from-label">Service</label>
-            <select id="selectService" class="form-select form-control" required>
+            <select id="selectService" name="service" class="form-select form-control" required>
                 <option selected disabled>Pilih service</option>
             </select>
         </div>
@@ -28,7 +36,7 @@
         </div>
         <div class="mb-3">
             <label class="from-label">Slot</label>
-            <select id="selectSlot" class="form-select form-control" required>
+            <select id="selectSlot" name="slot" class="form-select form-control" required>
                 <option selected disabled>Pilih slot</option>
             </select>
         </div>

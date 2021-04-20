@@ -18,10 +18,14 @@
             <tbody>
                 @foreach ($bookings as $booking)
                     <tr id="listBooking">
-                        <td>{{ $booking->pasien->user->nama }}</td>
+                        @if (isset($booking->bookingManual))
+                            <td>{{ $booking->bookingManual->nama }}</td>
+                        @else
+                            <td>{{ $booking->pasien->user->nama }}</td>
+                        @endif
                         <td>{{ $booking->slot->jadwal->dokter->nama }}</td>
                         <td>
-                            <span class="badge bg-primary">{{ $booking->service->nama }}</span>
+                            <span class="badge bg-primary my-auto">{{ $booking->service->nama }}</span>
                         </td>
                         <td>
                             <button id="btnEditBooking" data-id="{{ $booking->id }}" class="btn btn-primary">Edit</button>
@@ -53,6 +57,29 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            $('#tableBooking').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json'
+                },
+                columns: [{
+                        name: 'Pasien',
+                        orderable: true
+                    },
+                    {
+                        name: 'Dokter',
+                        orderable: true
+                    },
+                    {
+                        name: 'Service',
+                        orderable: true
+                    },
+                    {
+                        name: '',
+                        orderable: false
+                    }
+                ]
+            });
+
             $('#btnTambahBooking').click(function() {
                 $('#modalBooking').data('tipe', 'tambah');
                 $('#modalBooking').modal('show');
@@ -76,35 +103,44 @@
                 });
             });
 
-            $('#modalBooking').on('show.bs.modal', function(e) {
-                if ($(this).data('tipe') === 'tambah') {
-                    $('#selectDokter').change(function() {
-                        console.log('henlo');
-                        console.log($(this).val());
-                    });
-                }
+            $('#modalBookingContent').on('change', '#selectDokter', function() {
+                loadServiceJadwal($(this).val());
             });
 
-            $('#tableBooking').DataTable({
-                columns: [{
-                        name: 'Pasien',
-                        orderable: true
-                    },
-                    {
-                        name: 'Dokter',
-                        orderable: true
-                    },
-                    {
-                        name: 'Service',
-                        orderable: true
-                    },
-                    {
-                        name: '',
-                        orderable: false
-                    }
-                ]
+            $('#modalBookingContent').on('change', '#selectJadwal', function() {
+                loadSlotJadwal($(this).val());
             });
         });
+
+        function loadServiceJadwal(id) {
+            $('#selectService').html('');
+            $('#selectJadwal').html('');
+            $('#selectService').append(`<option selected disabled>Pilih service</option>`);
+            $('#selectJadwal').append(`<option selected disabled>Pilih jadwal</option>`);
+            $.get(`booking/dokter-service/${id}`, function(res) {
+                const dokter = JSON.parse(res);
+                dokter.service.forEach(service => {
+                    $('#selectService').append(`<option value="${service.id}">${service.nama}</option>`);
+                });
+
+                dokter.jadwal.forEach(jadwal => {
+                    $('#selectJadwal').append(
+                        `<option value="${jadwal.id}">${jadwal.tanggal}: ${jadwal.start} - ${jadwal.end}</option>`
+                        );
+                });
+            });
+        }
+
+        function loadSlotJadwal(id) {
+            $('#selectSlot').html('');
+            $('#selectSlot').append(`<option selected disabled>Pilih slot</option>`);
+            $.get(`booking/slot-jadwal/${id}`, function(res) {
+                const jadwal = JSON.parse(res);
+                jadwal.slot.forEach(slot => {
+                    $('#selectSlot').append(`<option value="${slot.id}">${slot.nomor}</option>`)
+                });
+            });
+        }
 
     </script>
 @endsection

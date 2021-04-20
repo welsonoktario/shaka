@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\BookingManual;
 use App\Models\Jadwal;
-use App\Models\Role;
+use App\Models\Pasien;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,18 +21,19 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::with('service')
-            ->where('user_id', Auth::user()->id)
-            ->orderBy('id', 'DESC');
+        $from = request()->getRequestUri();
 
-        return view('app.booking.index', ['bookings' => $bookings]);
-    }
+        if (str_contains($from, '/admin')) {
+            $bookings = Booking::with(['bookingManual', 'slot.jadwal.dokter', 'pasien.user', 'service'])->get();
 
-    public function indexAdmin()
-    {
-        $bookings = Booking::with(['slot.jadwal.dokter', 'pasien.user', 'service'])->get();
+            return view('admin.booking.index', ['bookings' => $bookings]);
+        } else {
+            $bookings = Booking::with('service')
+                ->where('user_id', Auth::user()->id)
+                ->orderBy('id', 'DESC');
 
-        return view('admin.booking.index', ['bookings' => $bookings]);
+            return view('app.booking.index', ['bookings' => $bookings]);
+        }
     }
 
     /**
@@ -59,14 +61,25 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find(Auth::id());
-        $user->booking()->create([
-            'metode_pembayaran' => $request->metode,
-            'waktu' => $request->waktu,
-            'service_id' => $request->service
+        $from = $request->getRequestUri();
+
+        $pasien = Pasien::firstWhere('user_id', Auth::id());
+        $booking = $pasien->booking()->create([
+            'slot_id' => $request->slot,
+            'service_id' => $request->service,
+            'tanggal' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
-        return redirect('/booking');
+        if (str_contains($from, '/admin')) {
+            BookingManual::create([
+                'booking_id' => $booking->id,
+                'nama' => $request->nama,
+                'no_hp' => $request->hp
+            ]);
+            return redirect()->route('admin.booking.index');
+        } else {
+            return redirect()->route('app.booking.index');
+        }
     }
 
     /**
@@ -136,7 +149,15 @@ class BookingController extends Controller
         return redirect('/booking');
     }
 
-    public function slotJadwal($id) {
+    public function dokterServiceJadwal($id)
+    {
+        $services = User::with(['service', 'jadwal'])->find($id);
+
+        return $services->toJson();
+    }
+
+    public function slotJadwal($id)
+    {
         $slots = Jadwal::with(['slot.booking'])->find($id);
 
         return $slots->toJson();

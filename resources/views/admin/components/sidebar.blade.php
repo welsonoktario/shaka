@@ -12,5 +12,14 @@
         <li class="nav-item my-1">
             <a class="nav-link{{ Route::currentRouteName() === 'admin.booking.index' ? ' active' : '' }}" href="{{ route('admin.booking.index') }}">Booking</a>
         </li>
+        <li class="nav-item my-1">
+            <a class="nav-link text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Logout
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </li>
     </ul>
 </div>
