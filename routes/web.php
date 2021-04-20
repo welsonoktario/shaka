@@ -30,4 +30,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
     Route::resource('booking', 'BookingController', ['as' => 'admin']);
 });
 
+Route::group(['prefix' => 'dokter', 'middleware' => ['web', 'dokter']], function () {
+    Route::redirect('/', 'dokter/jadwal', 302);
+    Route::resource('jadwal', 'JadwalController', ['as' => 'dokter']);
+});
+
+Route::group(['prefix' => 'pasien', 'middleware' => ['web']], function () {
+    Route::redirect('/', 'pasien/home', 302);
+    Route::view('home', 'pasien.home.index')->name('pasien.home');
+    Route::resource('booking', 'BookingController', ['as' => 'pasien']);
+    Route::resource('transaksi', 'TransaksiController', ['as' => 'pasien']);
+});
+
 Route::view('/home', 'home');

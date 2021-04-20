@@ -48,8 +48,12 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if ($user->role->nama === 'Admin') {
+        if ($user->role->id === 1) {
             return redirect()->route('admin.home');
+        } else if ($user->role->id === 2) {
+            return redirect()->route('dokter.jadwal.index');
+        } else {
+            return redirect()->route('pasien.home');
         }
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Jadwal;
 use App\Models\Slot;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JadwalController extends Controller
 {
@@ -16,9 +17,18 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwals = Jadwal::with('dokter')->get();
+        $from = request()->getRequestUri();
 
-        return view('admin.jadwal.index', ['jadwals' => $jadwals]);
+        if (str_contains($from, '/admin')) {
+            $jadwals = Jadwal::with('dokter')->get();
+            return view('admin.jadwal.index', ['jadwals' => $jadwals]);
+        } else if (str_contains($from, '/dokter')) {
+            $jadwals = Jadwal::with('dokter')->where('user_id', Auth::id())->get();
+            return view('dokter.jadwal.index', ['jadwals' => $jadwals]);
+        } else {
+            $jadwals = Jadwal::with('dokter')->get();
+            return view('pasien.jadwal.index', ['jadwals' => $jadwals]);
+        }
     }
 
     /**
@@ -42,9 +52,16 @@ class JadwalController extends Controller
      */
     public function show($id)
     {
+        $from = request()->getRequestUri();
         $jadwal = Jadwal::with(['dokter', 'slot.booking.pasien'])->find($id);
 
-        return view('admin.jadwal.show', ['jadwal' => $jadwal]);
+        if (str_contains($from, '/admin')) {
+            return view('admin.jadwal.show', ['jadwal' => $jadwal]);
+        } else if (str_contains($from, '/dokter')) {
+            return view('dokter.jadwal.show', ['jadwal' => $jadwal]);
+        } else {
+            return view('pasien.jadwal.show', ['jadwal' => $jadwal]);
+        }
     }
 
     /**

@@ -32,7 +32,7 @@ class BookingController extends Controller
                 ->where('user_id', Auth::user()->id)
                 ->orderBy('id', 'DESC');
 
-            return view('app.booking.index', ['bookings' => $bookings]);
+            return view('pasien.booking.index', ['bookings' => $bookings]);
         }
     }
 
@@ -49,7 +49,7 @@ class BookingController extends Controller
         if ($user->role->id === 1) {
             return view('admin.booking.create', ['dokters' => $dokters]);
         } else {
-            return view('app.booking.create', ['dokters' => $dokters]);
+            return view('pasien.booking.create', ['dokters' => $dokters]);
         }
     }
 
@@ -78,7 +78,7 @@ class BookingController extends Controller
             ]);
             return redirect()->route('admin.booking.index');
         } else {
-            return redirect()->route('app.booking.index');
+            return redirect()->route('pasien.booking.index');
         }
     }
 
@@ -95,7 +95,7 @@ class BookingController extends Controller
         $start = Carbon::create($booking->slot->jadwal->start)->toTimeString();
         $end = Carbon::create($booking->slot->jadwal->end)->toTimeString();
 
-        return view($request->tipe === 'pasien' ? 'app.booking.show' : 'admin.booking.show', [
+        return view($request->tipe === 'pasien' ? 'pasien.booking.show' : 'admin.booking.show', [
             'dokter' => $booking->slot->jadwal->dokter,
             'pasien' => $booking->pasien,
             'jadwal' => $booking->slot->jadwal,
@@ -116,7 +116,7 @@ class BookingController extends Controller
     {
         $booking = Booking::with('service')->find($id);
 
-        return view('app.booking.show', ['booking' => $booking]);
+        return view('pasien.booking.show', ['booking' => $booking]);
     }
 
     /**
