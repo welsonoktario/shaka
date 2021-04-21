@@ -28,9 +28,11 @@ class BookingController extends Controller
 
             return view('admin.booking.index', ['bookings' => $bookings]);
         } else {
-            $bookings = Booking::with('service')
-                ->where('user_id', Auth::user()->id)
-                ->orderBy('id', 'DESC');
+            $pasien = Pasien::firstWhere('user_id', Auth::id());
+            $bookings = Booking::with(['service', 'slot.jadwal'])
+                ->where('pasien_id', $pasien->id)
+                ->orderBy('id', 'DESC')
+                ->get();
 
             return view('pasien.booking.index', ['bookings' => $bookings]);
         }

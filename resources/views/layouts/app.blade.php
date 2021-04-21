@@ -11,21 +11,29 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="row vh-100" style="max-height: 100vh; max-width: 100vw">
-        <div class="col-2">
-            <div class="sticky-top">
-                @include('pasien.components.sidebar')
+    @auth
+        <div class="row vh-100" style="max-height: 100vh; max-width: 100vw">
+            <div class="col-2">
+                <div class="sticky-top">
+                    @include('pasien.components.sidebar')
+                </div>
+            </div>
+            <div class="col-10">
+                @yield('content')
             </div>
         </div>
-        <div class="col-10">
-            @yield('content')
-        </div>
-    </div>
+    @endauth
+    @guest
+        @yield('content')
+    @endguest
     @yield('js')
 </body>
 </html>

@@ -13,7 +13,11 @@
     <ul class="list-group list-group-flush">
         @foreach ($jadwal->slot as $slot)
             @if (isset($slot->booking))
-                <li class="list-group-item">Slot {{$slot->nomor}}: {{ $slot->booking->pasien->user->nama }}</li>
+                @if (isset($slot->booking->bookingManual))
+                    <li class="list-group-item">Slot {{$slot->nomor}}: {{ $slot->booking->bookingManual->nama }}</li>
+                @else
+                    <li class="list-group-item">Slot {{$slot->nomor}}: {{ $slot->booking->pasien->user->nama }}</li>
+                @endif
             @else
                 <li class="list-group-item">Slot {{$slot->nomor}}: Kosong</li>
             @endif
