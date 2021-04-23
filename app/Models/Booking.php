@@ -14,11 +14,6 @@ class Booking extends Model
         return $this->hasOne(Transaksi::class);
     }
 
-    public function bookingManual()
-    {
-        return $this->hasOne(BookingManual::class);
-    }
-
     public function slot()
     {
         return $this->belongsTo(Slot::class);

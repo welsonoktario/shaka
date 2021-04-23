@@ -73,11 +73,11 @@ class BookingController extends Controller
         ]);
 
         if (str_contains($from, '/admin')) {
-            BookingManual::create([
+            /* BookingManual::create([
                 'booking_id' => $booking->id,
                 'nama' => $request->nama,
                 'no_hp' => $request->hp
-            ]);
+            ]); */
             return redirect()->route('admin.booking.index');
         } else {
             return redirect()->route('pasien.booking.index');
