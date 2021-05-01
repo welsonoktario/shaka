@@ -24,7 +24,7 @@ class BookingController extends Controller
         $from = request()->getRequestUri();
 
         if (str_contains($from, '/admin')) {
-            $bookings = Booking::with(['bookingManual', 'slot.jadwal.dokter', 'pasien.user', 'service'])->get();
+            $bookings = Booking::with(['slot.jadwal.dokter', 'pasien.user', 'service'])->get();
 
             return view('admin.booking.index', ['bookings' => $bookings]);
         } else {
@@ -49,7 +49,8 @@ class BookingController extends Controller
         $dokters = User::with('service')->where('role_id', 2)->get();
 
         if ($user->role->id === 1) {
-            return view('admin.booking.create', ['dokters' => $dokters]);
+            $pasiens = Pasien::with('user')->get();
+            return view('admin.booking.create', ['dokters' => $dokters, 'pasiens' => $pasiens]);
         } else {
             return view('pasien.booking.create', ['dokters' => $dokters]);
         }
@@ -65,19 +66,14 @@ class BookingController extends Controller
     {
         $from = $request->getRequestUri();
 
-        $pasien = Pasien::firstWhere('user_id', Auth::id());
-        $booking = $pasien->booking()->create([
+        $pasien = Pasien::find($request->pasien);
+        $pasien->booking()->create([
             'slot_id' => $request->slot,
             'service_id' => $request->service,
             'tanggal' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         if (str_contains($from, '/admin')) {
-            /* BookingManual::create([
-                'booking_id' => $booking->id,
-                'nama' => $request->nama,
-                'no_hp' => $request->hp
-            ]); */
             return redirect()->route('admin.booking.index');
         } else {
             return redirect()->route('pasien.booking.index');

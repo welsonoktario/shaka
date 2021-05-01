@@ -6,12 +6,12 @@
     <div class="modal-body">
         @csrf
         <div class="mb-3">
-            <label class="form-label" for="nama">Nama</label>
-            <input class="form-control" type="text" name="nama" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="hp">No HP</label>
-            <input class="form-control" type="tel" name="hp" />
+            <label class="form-label" for="pasien">Pasien</label>
+            <select id="selectPasien" name="pasien" class="form-select form-control" required>
+                @foreach ($pasiens as $pasien)
+                    <option value="{{ $pasien->id }}">{{ $pasien->user->nama }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="mb-3">
             <label class="from-label">Dokter</label>

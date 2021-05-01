@@ -5,7 +5,6 @@ window.timeGridPlugin = require("@fullcalendar/timegrid").default;
 window.bootstrapPlugin = require("@fullcalendar/bootstrap").default;
 window.interactionPlugin = require("@fullcalendar/interaction").default;
 window.moment = require("moment");
-window.tippy = require("tippy.js").default;
 
 require("bootstrap");
-require("tippy.js/dist/tippy.css");
+require("select2");

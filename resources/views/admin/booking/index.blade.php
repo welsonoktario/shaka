@@ -18,17 +18,13 @@
             <tbody>
                 @foreach ($bookings as $booking)
                     <tr id="listBooking">
-                        @if (isset($booking->bookingManual))
-                            <td>{{ $booking->bookingManual->nama }}</td>
-                        @else
-                            <td>{{ $booking->pasien->user->nama }}</td>
-                        @endif
+                        <td>{{ $booking->pasien->user->nama }}</td>
                         <td>{{ $booking->slot->jadwal->dokter->nama }}</td>
                         <td>
                             <span class="badge bg-primary my-auto">{{ $booking->service->nama }}</span>
                         </td>
                         <td>
-                            <button id="btnEditBooking" data-id="{{ $booking->id }}" class="btn btn-primary">Edit</button>
+                            <button id="btnEditBooking" data-id="{{ $booking->id }}" class="btn btn-primary">Detail</button>
                         </td>
                     </tr>
                 @endforeach
@@ -36,7 +32,7 @@
         </table>
     </div>
 
-    <div id="modalBooking" class="modal fade" tabindex="-1" data-tipe="tambah">
+    <div id="modalBooking" class="modal fade" data-tipe="tambah">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div id="modalLoading" class="row h-100 align-items-center">
@@ -57,6 +53,8 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            $.fn.select2.defaults.set("theme", "bootstrap-5");
+
             $('#tableBooking').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json'
@@ -88,6 +86,7 @@
                 $.get(`booking/create`, function(res) {
                     $('#modalLoading').hide();
                     $('#modalBookingContent').html(res);
+                    loadCreate()
                 });
             });
 
@@ -111,6 +110,23 @@
                 loadSlotJadwal($(this).val());
             });
         });
+
+        function loadCreate() {
+            $('#selectPasien').select2({
+                placeholder: 'Pilih pasien',
+                language: 'id'
+            });
+
+            $('#pasienLama').click(function() {
+                $(this).addClass('active');
+                $('#pasienBaru').removeClass('active');
+            });
+
+            $('#pasienBaru').click(function() {
+                $(this).addClass('active');
+                $('#pasienLama').removeClass('active');
+            });
+        }
 
         function loadServiceJadwal(id) {
             $('#selectService').html('');

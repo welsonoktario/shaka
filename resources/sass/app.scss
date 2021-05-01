@@ -1,2 +1,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import "~select2/src/scss/core";
+@import "~select2-bootstrap-5-theme/src/include-all";
+
+.select2-close-mask{
+    z-index: 2099;
+}
+.select2-dropdown{
+    z-index: 3051;
+}
