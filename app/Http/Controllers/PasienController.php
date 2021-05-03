@@ -20,7 +20,7 @@ class PasienController extends Controller
     {
         $pasiens = Pasien::with('user')->get();
 
-        return view('admin.pasien.index', ['pasiens', $pasiens]);
+        return view('admin.pasien.index', ['pasiens' => $pasiens]);
     }
 
     /**
@@ -64,7 +64,7 @@ class PasienController extends Controller
     {
         $pasien = Pasien::with('user')->find($id);
 
-        return view('admin.pasien.show', ['pasien', $pasien]);
+        return view('admin.pasien.show', ['pasien' => $pasien]);
     }
 
     /**
@@ -77,7 +77,7 @@ class PasienController extends Controller
     {
         $pasien = Pasien::with('user')->find($id);
 
-        return view('admin.pasien.edit', ['pasien', $pasien]);
+        return view('admin.pasien.edit', ['pasien' => $pasien]);
     }
 
     /**

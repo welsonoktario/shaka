@@ -22,11 +22,15 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function () {
     Route::redirect('/', 'admin/home', 302);
+
     Route::view('home', 'admin.home.index')->name('admin.home');
-    Route::resource('dokter', 'DokterController', ['as' => 'admin']);
-    Route::resource('jadwal', 'JadwalController', ['as' => 'admin']);
+
     Route::get('booking/slot-jadwal/{id}', 'BookingController@slotJadwal')->name('admin.booking.slotJadwal');
     Route::get('booking/dokter-service/{id}', 'BookingController@dokterServiceJadwal')->name('admin.booking.dokterService');
+
+    Route::resource('dokter', 'DokterController', ['as' => 'admin']);
+    Route::resource('pasien', 'PasienController', ['as' => 'admin']);
+    Route::resource('jadwal', 'JadwalController', ['as' => 'admin']);
     Route::resource('booking', 'BookingController', ['as' => 'admin']);
 });
 

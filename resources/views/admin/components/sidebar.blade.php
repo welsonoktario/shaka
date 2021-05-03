@@ -7,7 +7,10 @@
             <a class="nav-link{{ Route::currentRouteName() === 'admin.dokter.index' ? ' active' : '' }}" href="{{ route('admin.dokter.index') }}">Dokter</a>
         </li>
         <li class="nav-item my-1">
-            <a class="nav-link{{ Route::currentRouteName() === 'admin.jadwa.index' ? ' active' : '' }}" href="{{ route('admin.jadwal.index') }}">Jadwal</a>
+            <a class="nav-link{{ Route::currentRouteName() === 'admin.pasien.index' ? ' active' : '' }}" href="{{ route('admin.pasien.index') }}">Pasien</a>
+        </li>
+        <li class="nav-item my-1">
+            <a class="nav-link{{ Route::currentRouteName() === 'admin.jadwal.index' ? ' active' : '' }}" href="{{ route('admin.jadwal.index') }}">Jadwal</a>
         </li>
         <li class="nav-item my-1">
             <a class="nav-link{{ Route::currentRouteName() === 'admin.booking.index' ? ' active' : '' }}" href="{{ route('admin.booking.index') }}">Booking</a>
