@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Booking;
-use App\Models\BookingManual;
 use App\Models\Jadwal;
 use App\Models\Pasien;
 use App\Models\Service;
@@ -25,7 +24,6 @@ class BookingController extends Controller
 
         if (str_contains($from, '/admin')) {
             $bookings = Booking::with(['slot.jadwal.dokter', 'pasien.user', 'service'])->get();
-
             return view('admin.booking.index', ['bookings' => $bookings]);
         } else {
             $pasien = Pasien::firstWhere('user_id', Auth::id());
@@ -33,8 +31,9 @@ class BookingController extends Controller
                 ->where('pasien_id', $pasien->id)
                 ->orderBy('id', 'DESC')
                 ->get();
+            $jadwals = Jadwal::with('dokter')->get();
 
-            return view('pasien.booking.index', ['bookings' => $bookings]);
+            return view('pasien.booking.index', ['bookings' => $bookings, 'jadwals' => $jadwals]);
         }
     }
 
@@ -43,16 +42,19 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $user = User::with('role')->find(Auth::id());
-        $dokters = User::with('service')->where('role_id', 2)->get();
 
         if ($user->role->id === 1) {
+            $dokters = User::with('service')->where('role_id', 2)->get();
             $pasiens = Pasien::with('user')->get();
+
             return view('admin.booking.create', ['dokters' => $dokters, 'pasiens' => $pasiens]);
         } else {
-            return view('pasien.booking.create', ['dokters' => $dokters]);
+            $dokter = User::with('service')->find($request->dokter);
+
+            return view('pasien.booking.create', ['services' => $dokter->service ]);
         }
     }
 

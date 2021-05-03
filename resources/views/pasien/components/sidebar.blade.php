@@ -6,9 +6,9 @@
         <li class="nav-item my-1">
             <a class="nav-link{{ Route::currentRouteName() === 'pasien.booking.index' ? ' active' : '' }}" href="{{ route('pasien.booking.index') }}">Booking</a>
         </li>
-        <li class="nav-item my-1">
+        {{-- <li class="nav-item my-1">
             <a class="nav-link{{ Route::currentRouteName() === 'pasien.transaksi.index' ? ' active' : '' }}" href="{{ route('pasien.transaksi.index') }}">Riwayat</a>
-        </li>
+        </li> --}}
         <li class="nav-item my-1">
             <a class="nav-link text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 Logout

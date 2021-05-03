@@ -39,13 +39,16 @@ Route::group(['prefix' => 'dokter', 'middleware' => ['web', 'dokter']], function
     Route::resource('jadwal', 'JadwalController', ['as' => 'dokter']);
 });
 
-Route::group(['prefix' => 'pasien', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'pasien', 'middleware' => 'web'], function () {
     Route::redirect('/', 'pasien/home', 302);
     Route::view('home', 'pasien.home.index')->name('pasien.home');
     Route::get('booking/slot-jadwal/{id}', 'BookingController@slotJadwal')->name('pasien.booking.slotJadwal');
     Route::get('booking/dokter-service/{id}', 'BookingController@dokterServiceJadwal')->name('pasien.booking.dokterService');
+
+    Route::resource('dokter', 'DokterController', ['as' => 'pasien']);
+    Route::resource('pasien', 'PasienController', ['as' => 'pasien']);
+    Route::resource('jadwal', 'JadwalController', ['as' => 'pasien']);
     Route::resource('booking', 'BookingController', ['as' => 'pasien']);
-    Route::resource('transaksi', 'TransaksiController', ['as' => 'pasien']);
 });
 
 Route::view('/home', 'home');

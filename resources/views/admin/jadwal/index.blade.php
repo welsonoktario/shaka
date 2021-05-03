@@ -157,6 +157,5 @@
             });
             calendar.render();
         });
-
     </script>
 @endsection

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class JadwalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin', ['only' => ['store', 'update', 'destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -53,14 +58,14 @@ class JadwalController extends Controller
     public function show($id)
     {
         $from = request()->getRequestUri();
-        $jadwal = Jadwal::with(['dokter', 'slot.booking.pasien.booking.bookingManual'])->find($id);
+        $jadwal = Jadwal::with(['dokter', 'slot.booking.pasien.booking'])->find($id);
 
         if (str_contains($from, '/admin')) {
             return view('admin.jadwal.show', ['jadwal' => $jadwal]);
         } else if (str_contains($from, '/dokter')) {
             return view('dokter.jadwal.show', ['jadwal' => $jadwal]);
         } else {
-            return view('pasien.jadwal.show', ['jadwal' => $jadwal]);
+            return view('pasien.booking.show', ['jadwal' => $jadwal]);
         }
     }
 

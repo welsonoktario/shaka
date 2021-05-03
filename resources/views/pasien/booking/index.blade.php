@@ -1,82 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- <div class="px-4 py-2">
-    <div class="mb-4 d-flex justify-content-between">
-        <h2>Tambah Booking</h2>
-    </div>
-
-    <form class="container mx-auto" action="{{ route('pasien.booking.store') }}" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label class="form-label" for="nama">Nama</label>
-            <input class="form-control" type="text" name="nama" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="hp">No HP</label>
-            <input class="form-control" type="tel" name="hp" />
-        </div>
-        <div class="mb-3">
-            <label class="from-label">Dokter</label>
-            <select id="selectDokter" class="form-select form-control" required>
-                <option selected disabled>Pilih dokter</option>
-                @foreach ($dokters as $dokter)
-                    <option value="{{ $dokter->id }}">{{ $dokter->nama }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="from-label">Service</label>
-            <select id="selectService" name="service" class="form-select form-control" required>
-                <option selected disabled>Pilih service</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="from-label">Jadwal</label>
-            <select id="selectJadwal" class="form-select form-control" required>
-                <option selected disabled>Pilih jadwal</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="from-label">Slot</label>
-            <select id="selectSlot" name="slot" class="form-select form-control" required>
-                <option selected disabled>Pilih slot</option>
-            </select>
-        </div>
-        <button class="btn btn-primary" type="submit">Tambah</button>
-    </form>
-</div> --}}
 <div class="px-4 py-2">
     <div class="mb-4 d-flex justify-content-between">
         <h2>Booking</h2>
-        <button id="btnTambahBooking" class="btn btn-primary">Tambah Booking</button>
     </div>
-    <table id="tableBooking" class="table">
-        <thead>
-            <tr>
-                <th>Dokter</th>
-                <th>Servis</th>
-                <th>Jadwal</th>
-                <th>Slot</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($bookings as $booking)
-                <tr id="listBooking">
-                    <td>{{ $booking->slot->jadwal->dokter->nama }}</td>
-                    <td>
-                        <span class="badge bg-primary my-auto">{{ $booking->service->nama }}</span>
-                    </td>
-                    <td>{{ \Carbon\Carbon::parse($booking->slot->jadwal->tanggal)->translatedFormat('l, d F Y') }}</td>
-                    {{-- <td>{{ date('l, d F Y', strtotime($booking->slot->jadwal->tanggal)) }}</td> --}}
-                    <td>{{ $booking->slot->nomor }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div id="calendarJadwal"></div>
 </div>
 
-<div id="modalBooking" class="modal fade" tabindex="-1" data-tipe="tambah">
+<div id="modalBooking" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div id="modalLoading" class="row h-100 align-items-center">
@@ -92,52 +24,81 @@
         </div>
     </div>
 </div>
+
+<div id="modalTambahBooking" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="modalLoadingBooking" class="row h-100 align-items-center">
+                <div class="col align-self-center">
+                    <div class="d-flex my-5 justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modalTambahBookingContent"></div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
     $(document).ready(function() {
-        $('#tableBooking').DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json'
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        const jadwals = {!! $jadwals !!};
+        const events = jadwals.map((jadwal) => {
+            return {
+                id: jadwal.id,
+                start: `${jadwal.tanggal} ${jadwal.start}`,
+                end: `${jadwal.tanggal} ${jadwal.end}`,
+                title: `${jadwal.dokter.nama} (${jadwal.jumlah_slot} slot)`,
+            }
+        });
+        const calendar = new FullCalendar.Calendar($("#calendarJadwal")[0], {
+            plugins: [interactionPlugin, timeGridPlugin],
+            initialView: 'timeGridWeek',
+            editable: false,
+            allDaySlot: false,
+            views: {
+                week: {
+                    slotLabelInterval: '00:30:00',
+                    slotLabelFormat: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        meridiem: 'short',
+                        hour12: false
+                    }
+                }
             },
-            columns: [
-                {
-                    name: 'Dokter',
-                    orderable: true
-                },
-                {
-                    name: 'Service',
-                    orderable: true
-                },
-                {
-                    name: 'Jadwal',
-                    orderable: true
-                },
-                {
-                    name: 'Slot',
-                    orderable: false
-                },
-            ]
+            events,
+            eventClick: function(event) {
+                $('#modalBooking').modal('show');
+                $('#modalBookingContent').html('');
+                $('#modalLoading').show();
+                $.get(`jadwal/${event.event.id}`, function(res) {
+                    $('#modalLoading').hide();
+                    $('#modalBookingContent').html(res);
+                });
+            }
         });
+        calendar.render();
 
-        $('#btnTambahBooking').click(function() {
-            $('#modalBooking').data('tipe', 'tambah');
-            $('#modalBooking').modal('show');
-            $('#modalBookingContent').html('');
-            $('#modalLoading').show();
-            $.get(`booking/create`, function(res) {
-                $('#modalLoading').hide();
-                $('#modalBookingContent').html(res);
+        $('#modalBookingContent').on('click', '#btnTambahBooking', function() {
+            const { slot, dokter } = $(this).data();
+            $('#modalTambahBooking').modal('show');
+            $('#modalTambahBookingContent').html('');
+            $('#modalLoadingBooking').show();
+            $.get(`booking/create?dokter=${dokter}`, function(res) {
+                $('#modalLoadingBooking').hide();
+                $('#modalTambahBookingContent').html(res);
             });
-        });
-
-        $('#modalBookingContent').on('change', '#selectDokter', function() {
-            loadServiceJadwal($(this).val());
-        });
-
-        $('#modalBookingContent').on('change', '#selectJadwal', function() {
-            loadSlotJadwal($(this).val());
         });
     });
 

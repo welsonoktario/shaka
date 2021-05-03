@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class DokterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin', ['except' => ['store', 'destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
