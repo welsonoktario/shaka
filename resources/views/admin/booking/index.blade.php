@@ -24,7 +24,8 @@
                             <span class="badge bg-primary my-auto">{{ $booking->service->nama }}</span>
                         </td>
                         <td>
-                            <button id="btnEditBooking" data-id="{{ $booking->id }}" class="btn btn-primary">Detail</button>
+                            <button id="btnEditBooking" data-id="{{ $booking->id }}"
+                                class="btn btn-primary">Detail</button>
                         </td>
                     </tr>
                 @endforeach
@@ -112,27 +113,17 @@
         });
 
         function loadCreate() {
-            $('#selectPasien').select2({
-                placeholder: 'Pilih pasien',
-                language: 'id'
-            });
-
-            $('#pasienLama').click(function() {
-                $(this).addClass('active');
-                $('#pasienBaru').removeClass('active');
-            });
-
-            $('#pasienBaru').click(function() {
-                $(this).addClass('active');
-                $('#pasienLama').removeClass('active');
+            $('.selectOption').each(function() {
+                $(this).select2({
+                    placeholder: `Pilih ${$(this).data('label')}`,
+                    language: 'id'
+                });
             });
         }
 
         function loadServiceJadwal(id) {
             $('#selectService').html('');
             $('#selectJadwal').html('');
-            $('#selectService').append(`<option selected disabled>Pilih service</option>`);
-            $('#selectJadwal').append(`<option selected disabled>Pilih jadwal</option>`);
             $.get(`booking/dokter-service/${id}`, function(res) {
                 const dokter = JSON.parse(res);
                 dokter.service.forEach(service => {
@@ -142,14 +133,13 @@
                 dokter.jadwal.forEach(jadwal => {
                     $('#selectJadwal').append(
                         `<option value="${jadwal.id}">${jadwal.tanggal}: ${jadwal.start} - ${jadwal.end}</option>`
-                        );
+                    );
                 });
             });
         }
 
         function loadSlotJadwal(id) {
             $('#selectSlot').html('');
-            $('#selectSlot').append(`<option selected disabled>Pilih slot</option>`);
             $.get(`booking/slot-jadwal/${id}`, function(res) {
                 const jadwal = JSON.parse(res);
                 jadwal.slot.forEach(slot => {

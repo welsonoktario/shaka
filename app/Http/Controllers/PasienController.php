@@ -43,11 +43,17 @@ class PasienController extends Controller
     {
         $user = User::create([
             'nama' => $request->nama,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
+            'no_hp' => $request->no_hp,
             'role_id' => 3
         ]);
 
-        $pasien = $user->pasien->create($request->only('tanggal_lahir', 'alamat'));
+        $pasien = Pasien::create([
+            'user_id' => $user->id,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat
+        ]);
 
         if (!$pasien) return redirect()->route('admin.pasien.index')->with('status', 'Gagal menambahkan pasien baru');
 

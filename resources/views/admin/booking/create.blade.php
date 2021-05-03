@@ -7,7 +7,7 @@
         @csrf
         <div class="mb-3">
             <label class="form-label" for="pasien">Pasien</label>
-            <select id="selectPasien" name="pasien" class="form-select form-control" required>
+            <select id="selectPasien" name="pasien" class="form-select form-control selectOption" data-label="pasien" required>
                 @foreach ($pasiens as $pasien)
                     <option value="{{ $pasien->id }}">{{ $pasien->user->nama }}</option>
                 @endforeach
@@ -15,8 +15,7 @@
         </div>
         <div class="mb-3">
             <label class="from-label">Dokter</label>
-            <select id="selectDokter" class="form-select form-control" required>
-                <option selected disabled>Pilih dokter</option>
+            <select id="selectDokter" class="form-select form-control selectOption" data-label="dokter" required>
                 @foreach ($dokters as $dokter)
                     <option value="{{ $dokter->id }}">{{ $dokter->nama }}</option>
                 @endforeach
@@ -24,20 +23,17 @@
         </div>
         <div class="mb-3">
             <label class="from-label">Service</label>
-            <select id="selectService" name="service" class="form-select form-control" required>
-                <option selected disabled>Pilih service</option>
+            <select id="selectService" name="service" class="form-select form-control selectOption" data-label="service" required>
             </select>
         </div>
         <div class="mb-3">
             <label class="from-label">Jadwal</label>
-            <select id="selectJadwal" class="form-select form-control" required>
-                <option selected disabled>Pilih jadwal</option>
+            <select id="selectJadwal" class="form-select form-control selectOption" data-label="jadwal" required>
             </select>
         </div>
         <div class="mb-3">
             <label class="from-label">Slot</label>
-            <select id="selectSlot" name="slot" class="form-select form-control" required>
-                <option selected disabled>Pilih slot</option>
+            <select id="selectSlot" name="slot" class="form-select form-control selectOption" data-label="slot" required>
             </select>
         </div>
     </div>
