@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,11 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class DokterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin', ['except' => ['store', 'destroy']]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +45,7 @@ class DokterController extends Controller
         $dokter = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'password' => Hash::make('12345'),
+            'password' => Hash::make($request->password),
             'no_hp' => $request->hp,
             'role_id' => 2,
         ]);

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Jadwal;
@@ -20,21 +21,8 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $from = request()->getRequestUri();
-
-        if (str_contains($from, '/admin')) {
-            $bookings = Booking::with(['slot.jadwal.dokter', 'pasien.user', 'service'])->get();
-            return view('admin.booking.index', ['bookings' => $bookings]);
-        } else {
-            $pasien = Pasien::firstWhere('user_id', Auth::id());
-            $bookings = Booking::with(['service', 'slot.jadwal'])
-                ->where('pasien_id', $pasien->id)
-                ->orderBy('id', 'DESC')
-                ->get();
-            $jadwals = Jadwal::with('dokter')->get();
-
-            return view('pasien.booking.index', ['bookings' => $bookings, 'jadwals' => $jadwals]);
-        }
+        $bookings = Booking::with(['slot.jadwal.dokter', 'pasien.user', 'service'])->get();
+        return view('admin.booking.index', ['bookings' => $bookings]);
     }
 
     /**
@@ -42,20 +30,12 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $user = User::with('role')->find(Auth::id());
+        $dokters = User::with('service')->where('role_id', 2)->get();
+        $pasiens = Pasien::with('user')->get();
 
-        if ($user->role->id === 1) {
-            $dokters = User::with('service')->where('role_id', 2)->get();
-            $pasiens = Pasien::with('user')->get();
-
-            return view('admin.booking.create', ['dokters' => $dokters, 'pasiens' => $pasiens]);
-        } else {
-            $dokter = User::with('service')->find($request->dokter);
-
-            return view('pasien.booking.create', ['services' => $dokter->service ]);
-        }
+        return view('admin.booking.create', ['dokters' => $dokters, 'pasiens' => $pasiens]);
     }
 
     /**
@@ -66,8 +46,6 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $from = $request->getRequestUri();
-
         $pasien = Pasien::find($request->pasien);
         $pasien->booking()->create([
             'slot_id' => $request->slot,
@@ -75,11 +53,7 @@ class BookingController extends Controller
             'tanggal' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
-        if (str_contains($from, '/admin')) {
-            return redirect()->route('admin.booking.index');
-        } else {
-            return redirect()->route('pasien.booking.index');
-        }
+        return redirect()->route('admin.booking.index');
     }
 
     /**
@@ -88,14 +62,14 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
         $booking = Booking::with(['pasien.user', 'slot.jadwal.dokter.service'])->find($id);
         $tanggal = Carbon::create($booking->slot->jadwal->start)->toDateString();
         $start = Carbon::create($booking->slot->jadwal->start)->toTimeString();
         $end = Carbon::create($booking->slot->jadwal->end)->toTimeString();
 
-        return view($request->tipe === 'pasien' ? 'pasien.booking.show' : 'admin.booking.show', [
+        return view(request()->tipe === 'pasien' ? 'pasien.booking.show' : 'admin.booking.show', [
             'dokter' => $booking->slot->jadwal->dokter,
             'pasien' => $booking->pasien,
             'jadwal' => $booking->slot->jadwal,
@@ -132,7 +106,7 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $booking->service()->associate($service);
 
-        return redirect('/booking');
+        return redirect()->route('admin.booking.index');
     }
 
     /**
@@ -144,22 +118,8 @@ class BookingController extends Controller
     public function destroy($id)
     {
         $booking = Booking::find($id);
-        $booking->delete();
+        $booking->destroy();
 
-        return redirect('/booking');
-    }
-
-    public function dokterServiceJadwal($id)
-    {
-        $services = User::with(['service', 'jadwal'])->find($id);
-
-        return $services->toJson();
-    }
-
-    public function slotJadwal($id)
-    {
-        $slots = Jadwal::with(['slot.booking'])->find($id);
-
-        return $slots->toJson();
+        return redirect()->route('admin.booking.index');
     }
 }

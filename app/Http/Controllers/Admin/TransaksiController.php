@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Transaksi;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -15,7 +14,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        return view('pasien.riwayat.index');
+        //
     }
 
     /**
@@ -47,11 +46,7 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        $transaksis = Transaksi::with(['booking' => function ($q) {
-            return $q->where('pasien_id', Auth::id());
-        }])->get();
-
-        return view('pasien.riwayat.index', ['transaksis' => $transaksis]);
+        //
     }
 
     /**

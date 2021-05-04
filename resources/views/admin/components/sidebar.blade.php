@@ -1,4 +1,4 @@
-<div class="sticky-top h-100 px-2 py-2">
+<div class="sticky-top h-100 px-2 py-2 bg-dark">
     <ul class="nav nav-pills flex-column">
         <li class="nav-item my-1">
             <a class="nav-link{{ Route::currentRouteName() === 'admin.home' ? ' active' : '' }}" href="{{ route('admin.home') }}">Home</a>

@@ -1,21 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Pasien;
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Throwable;
 
 class PasienController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin', ['only' => ['store', 'destroy']]);
-    }
-
     /**
      * Display a listing of the resource.
      *

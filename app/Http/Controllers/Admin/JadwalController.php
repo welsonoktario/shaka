@@ -1,20 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
 use App\Models\Slot;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class JadwalController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin', ['only' => ['store', 'update', 'destroy']]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,18 +17,8 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $from = request()->getRequestUri();
-
-        if (str_contains($from, '/admin')) {
-            $jadwals = Jadwal::with('dokter')->get();
-            return view('admin.jadwal.index', ['jadwals' => $jadwals]);
-        } else if (str_contains($from, '/dokter')) {
-            $jadwals = Jadwal::with('dokter')->where('user_id', Auth::id())->get();
-            return view('dokter.jadwal.index', ['jadwals' => $jadwals]);
-        } else {
-            $jadwals = Jadwal::with('dokter')->get();
-            return view('pasien.jadwal.index', ['jadwals' => $jadwals]);
-        }
+        $jadwals = Jadwal::with('dokter')->get();
+        return view('admin.jadwal.index', ['jadwals' => $jadwals]);
     }
 
     /**
@@ -41,32 +26,12 @@ class JadwalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         $dokters = User::with('service')->where('role_id', 2)->get();
-        $waktu = [$request->start, $request->end];
+        $waktu = [request('start'), request('end')];
 
-        return view('admin.jadwal.create', ['dokters' => $dokters, 'waktu' => $waktu, 'tanggal' => $request->tanggal]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $from = request()->getRequestUri();
-        $jadwal = Jadwal::with(['dokter', 'slot.booking.pasien.booking'])->find($id);
-
-        if (str_contains($from, '/admin')) {
-            return view('admin.jadwal.show', ['jadwal' => $jadwal]);
-        } else if (str_contains($from, '/dokter')) {
-            return view('dokter.jadwal.show', ['jadwal' => $jadwal]);
-        } else {
-            return view('pasien.booking.show', ['jadwal' => $jadwal]);
-        }
+        return view('admin.jadwal.create', ['dokters' => $dokters, 'waktu' => $waktu, 'tanggal' => request('tanggal')]);
     }
 
     /**
@@ -94,6 +59,29 @@ class JadwalController extends Controller
         Slot::insert($slots);
 
         return redirect()->route('admin.jadwal.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $jadwal = Jadwal::with(['dokter', 'slot.booking.pasien.booking'])->find($id);
+        return view('admin.jadwal.show', ['jadwal' => $jadwal]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**

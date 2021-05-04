@@ -21,9 +21,7 @@
 <body>
     <div class="row vh-100" style="max-height: 100vh; max-width: 100vw">
         <div class="col-2">
-            <div class="sticky-top">
-                @include('admin.components.sidebar')
-            </div>
+          @include('admin.components.sidebar')
         </div>
         <div class="col-10">
             @yield('content')
