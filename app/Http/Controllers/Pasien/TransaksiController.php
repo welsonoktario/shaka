@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Pasien;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -14,7 +17,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $transaksis = Booking::with(['transaksi', 'slot.jadwal', 'pasien.user', 'service'])->has('transaksi')->get();
     }
 
     /**

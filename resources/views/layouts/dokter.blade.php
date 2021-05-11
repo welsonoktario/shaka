@@ -20,10 +20,8 @@
 </head>
 <body>
     <div class="row vh-100" style="max-height: 100vh; max-width: 100vw">
-        <div class="col-2">
-            <div class="sticky-top">
-                @include('dokter.components.sidebar')
-            </div>
+        <div class="col-2 bg-dark">
+          @include('dokter.components.sidebar')
         </div>
         <div class="col-10">
             @yield('content')

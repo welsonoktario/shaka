@@ -25,6 +25,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
 
     Route::view('home', 'admin.home.index')->name('admin.home');
 
+    Route::prefix('booking')->group(function () {
+        Route::get('dokter-service/{id}', 'Admin\BookingController@dokterServiceJadwal')->name('admin.booking.serviceJadwal');
+        Route::get('slot-jadwal/{id}', 'Admin\BookingController@slotJadwal')->name('admin.booking.slotJadwal');
+    });
+
     Route::resource('dokter', 'Admin\DokterController', ['as' => 'admin']);
     Route::resource('pasien', 'Admin\PasienController', ['as' => 'admin']);
     Route::resource('jadwal', 'Admin\JadwalController', ['as' => 'admin']);

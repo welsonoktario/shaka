@@ -1,7 +1,9 @@
 <form action="{{ route('admin.dokter.store') }}" method="POST">
   <div class="modal-header">
     <h5 class="modal-title">Tambah Dokter</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
   </div>
   <div class="modal-body">
     @csrf
@@ -36,6 +38,6 @@
   </div>
   <div class="modal-footer">
     <button type="submit" class="btn btn-primary">Tambah</button>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
   </div>
 </form>

@@ -9,22 +9,18 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 </head>
 <body>
     @auth
         <div class="row vh-100" style="max-height: 100vh; max-width: 100vw">
-            <div class="col-2">
-                <div class="sticky-top">
-                    @include('pasien.components.sidebar')
-                </div>
+            <div class="col-2 bg-dark">
+              @include('pasien.components.sidebar')
             </div>
             <div class="col-10">
                 @yield('content')
@@ -34,6 +30,12 @@
     @guest
         @yield('content')
     @endguest
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
+
     @yield('js')
 </body>
 </html>

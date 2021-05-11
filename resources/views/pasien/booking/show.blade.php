@@ -15,8 +15,8 @@
             @if (isset($slot->booking))
                 <li class="list-group-item">Slot {{ $slot->nomor }}: {{ $slot->booking->pasien->user->nama }}</li>
             @else
-                <li class="list-group-item">
-                    <span>Slot {{$slot->nomor}}: </span>
+                <li id="slot{{ $slot->id }}" data-nomor="{{ $slot->nomor }}" class="list-group-item">
+                    <span>Slot {{ $slot->nomor }}: </span>
                     <button id="btnTambahBooking" class="btn btn-outline-primary btn-sm" data-dokter="{{ $jadwal->dokter->id }}" data-slot="{{ $slot->id }}">Booking</button>
                 </li>
             @endif

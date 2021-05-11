@@ -103,7 +103,6 @@
                     });
                 },
                 eventResize: function(cell) {
-                    console.log(cell.event);
                     const start = moment(cell.event.startStr).format('YYYY-MM-DD HH:mm');
                     const end = moment(cell.event.endStr).format('YYYY-MM-DD HH:mm');
                     const tanggal = moment(cell.event.endStr).format('YYYY-MM-DD');

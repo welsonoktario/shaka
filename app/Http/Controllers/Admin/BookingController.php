@@ -22,6 +22,7 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = Booking::with(['slot.jadwal.dokter', 'pasien.user', 'service'])->get();
+
         return view('admin.booking.index', ['bookings' => $bookings]);
     }
 
@@ -53,7 +54,7 @@ class BookingController extends Controller
             'tanggal' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
-        return redirect()->route('admin.booking.index');
+        return redirect()->route('admin.booking.index')->with('status', 'Sukses menambah booking');
     }
 
     /**
@@ -69,7 +70,7 @@ class BookingController extends Controller
         $start = Carbon::create($booking->slot->jadwal->start)->toTimeString();
         $end = Carbon::create($booking->slot->jadwal->end)->toTimeString();
 
-        return view(request()->tipe === 'pasien' ? 'pasien.booking.show' : 'admin.booking.show', [
+        return view('admin.booking.show', [
             'dokter' => $booking->slot->jadwal->dokter,
             'pasien' => $booking->pasien,
             'jadwal' => $booking->slot->jadwal,
@@ -106,7 +107,7 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $booking->service()->associate($service);
 
-        return redirect()->route('admin.booking.index');
+        return redirect()->route('admin.booking.index')->with('status', 'Sukses mengubah booking');
     }
 
     /**
@@ -120,6 +121,17 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $booking->destroy();
 
-        return redirect()->route('admin.booking.index');
+        return redirect()->route('admin.booking.index')->with('status', 'Sukses menghapus booking');
+    }
+
+    public function dokterServiceJadwal($id)
+    {
+        $services = User::with(['service', 'jadwal'])->find($id);
+        return $services->toJson();
+    }
+    public function slotJadwal($id)
+    {
+        $slots = Jadwal::with(['slot.booking'])->find($id);
+        return $slots->toJson();
     }
 }

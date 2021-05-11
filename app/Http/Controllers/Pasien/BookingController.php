@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class BookingController extends Controller
 {
@@ -40,7 +41,7 @@ class BookingController extends Controller
     {
         $dokter = User::with('service')->find(request('dokter'));
 
-        return view('pasien.booking.create', ['services' => $dokter->service ]);
+        return view('pasien.booking.create', ['services' => $dokter->service]);
     }
 
     /**
@@ -51,14 +52,19 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $pasien = Pasien::find($request->pasien);
-        $pasien->booking()->create([
-            'slot_id' => $request->slot,
-            'service_id' => $request->service,
-            'tanggal' => Carbon::now()->format('Y-m-d H:i:s')
-        ]);
+        try {
+            $user = User::find(Auth::id());
+            $pasien = Pasien::firstWhere('user_id', $user->id);
+            $pasien->booking()->create([
+                'slot_id' => $request->slot,
+                'service_id' => $request->service,
+                'tanggal' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
 
-        return redirect()->route('pasien.booking.index');
+            return 'ok';
+        } catch (Throwable $e) {
+            return 'gagal';
+        }
     }
 
     /**
