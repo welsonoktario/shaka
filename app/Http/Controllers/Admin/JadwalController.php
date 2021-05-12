@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
 use App\Models\Slot;
 use App\Models\User;
+use Carbon\Carbon;
+use DateTimeZone;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -29,7 +31,9 @@ class JadwalController extends Controller
     public function create()
     {
         $dokters = User::with('service')->where('role_id', 2)->get();
-        $waktu = [request('start'), request('end')];
+        $start = Carbon::parse(request('start'))->format('Y-m-d\TH:i');
+        $end = Carbon::parse(request('end'))->format('Y-m-d\TH:i');
+        $waktu = [$start, $end];
 
         return view('admin.jadwal.create', ['dokters' => $dokters, 'waktu' => $waktu, 'tanggal' => request('tanggal')]);
     }
@@ -46,8 +50,8 @@ class JadwalController extends Controller
         $slots = [];
 
         $jadwal = $dokter->jadwal()->create([
-            'start' => $request->start,
-            'end' => $request->end,
+            'start' => date('Y-m-d H:i:s', strtotime($request->start)),
+            'end' => date('Y-m-d H:i:s', strtotime($request->end)),
             'tanggal' => $request->tanggal,
             'jumlah_slot' => $request->slot,
         ]);

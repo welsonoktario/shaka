@@ -3,14 +3,14 @@
 @section('title', 'Booking')
 @section('content')
   <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between my-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800 d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">Booking</h1>
       <button id="btnTambahBooking" class="d-sm-block btn btn-sm btn-primary shadow-sm"><i
           class="fas fa-plus fa-sm text-white-50"></i> Tambah Booking</button>
     </div>
 
-    <div class="table-responsive rounded-lg bg-white shadow-lg">
-      <table id="tableBooking" class="table m-2" width="100%" cellspacing="0">
+    <div class="table-responsive p-4 rounded-lg bg-white shadow-lg">
+      <table id="tableBooking" class="table" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th>Pasien</th>

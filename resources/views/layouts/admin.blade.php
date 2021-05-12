@@ -17,9 +17,10 @@
 
 <body>
   <div id="wrapper">
+    @include('admin.components.loading')
     @include('admin.components.sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
-      <div id="content">
+      <div id="content" style="max-height: 100vh">
         @include('admin.components.navbar')
         @yield('content')
       </div>

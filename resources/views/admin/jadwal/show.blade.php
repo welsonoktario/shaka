@@ -1,6 +1,8 @@
 <div class="modal-header">
-    <h5 class="modal-title">Pasien</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <h5 class="modal-title">Detail Jadwal</h5>
+  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
 </div>
 <div class="modal-body">
     <h5>Jadwal</h5>
@@ -20,7 +22,7 @@
         @endforeach
     </ul>
 </div>
-<div class="modal-footer d-flex justify-content-between">
-    <button id="btnDelete" class="btn btn-danger">Hapus</button>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+<div class="modal-footer">
+    <button id="btnHapusJadwal" class="btn btn-danger">Hapus</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 </div>
