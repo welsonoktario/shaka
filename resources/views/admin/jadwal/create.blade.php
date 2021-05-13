@@ -18,7 +18,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label">Waktu Mulai</label>
-      <input type="datetime-local" class="form-control" name="start" value="{{ $waktu[0] }}" required />
+      <input type="datetime-local" class="form-control" name="start" value="{{ $waktu[0] }}" readonly required />
     </div>
     <div class="mb-3">
       <label class="form-label">Waktu Akhir</label>

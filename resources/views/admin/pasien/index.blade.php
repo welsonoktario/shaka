@@ -12,16 +12,22 @@
       <table id="tablePasien" class="table" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th class="text-center">Nama</th>
-            <th class="text-center"></th>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Tanggal Lahir</th>
+            <th>Tanggal Terdaftar</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           @foreach ($pasiens as $pasien)
-            <tr>
+            <tr class="listPasien">
               <td>{{ $pasien->user->nama }}</td>
+              <td>{{ $pasien->alamat }}</td>
+              <td>{{ $pasien->tanggal_lahir->translatedFormat('d F Y') }}</td>
+              <td data-order="{{ $pasien->user->created_at }}">{{ $pasien->user->created_at->translatedFormat('d F Y') }}</td>
               <td class="text-center">
-                <button id="btnDetailPasien" data-id="{{ $pasien->id }}" class="btn btn-primary">Detail</button>
+                <button id="btnDetailPasien" class="btn btn-sm btn-primary" data-id="{{ $pasien->id }}">Detail</button>
               </td>
             </tr>
           @endforeach
@@ -39,7 +45,7 @@
           <div class="col align-self-center">
             <div class="d-flex my-5 justify-content-center">
               <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Memuat...</span>
               </div>
             </div>
           </div>
@@ -65,7 +71,7 @@
         });
       });
 
-      $('#listPasien #btnDetailPasien').click(function() {
+      $('.listPasien #btnDetailPasien').click(function() {
         const id = $(this).data('id');
         $('#modalPasien').modal('show');
         $('#modalPasienContent').html('');
@@ -82,6 +88,18 @@
         },
         columns: [{
             name: 'Nama',
+            orderable: true
+          },
+          {
+            name: 'Alamat',
+            orderable: false
+          },
+          {
+            name: 'Tanggal Lahit',
+            orderable: true
+          },
+          {
+            name: 'Tanggal Terdaftar',
             orderable: true
           },
           {

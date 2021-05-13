@@ -15,7 +15,7 @@
                     <div class="col align-self-center">
                         <div class="d-flex my-5 justify-content-center">
                             <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                                <span class="visually-hidden">Memuat...</span>
                             </div>
                         </div>
                     </div>

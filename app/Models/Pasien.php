@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pasien extends Model
 {
     protected $fillable = ['user_id', 'tanggal_lahir', 'alamat'];
-    public $timestamps = false;
+    protected $dates = ['tanggal_lahir'];
 
     public function user()
     {

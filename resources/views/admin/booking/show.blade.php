@@ -7,7 +7,7 @@
   </div>
   <div class="modal-body">
     <div class="mb-3">
-      <h4>Jadwal</h4>
+      <h5>Jadwal</h5>
       <div class="mx-2 mt-1">
         <div class="row">
           <dt class="col-4">Tanggal</dt>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="mb-3">
-      <h4>Dokter</h4>
+      <h5>Dokter</h5>
       <div class="mx-2 mt-1">
         <div class="row">
           <dt class="col-4">Nama</dt>
@@ -46,14 +46,14 @@
           <dt class="col-4">Service</dt>
           <dd class="col-8">
             @foreach ($dokter->service as $service)
-              <span class="badge bg-primary">{{ $service->nama }}</span>
+              <span class="badge badge-primary">{{ $service->nama }}</span>
             @endforeach
           </dd>
         </div>
       </div>
     </div>
     <div>
-      <h4>Pasien</h4>
+      <h5>Pasien</h5>
       <div class="mx-2 mt-1">
         <div class="row">
           <dt class="col-4">Nama</dt>

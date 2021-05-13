@@ -12,23 +12,23 @@
       <table id="tableDokter" class="table" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th class="text-center">Nama</th>
-            <th class="text-center">Servis</th>
-            <th class="text-center">Tanggal Terdaftar</th>
+            <th>Nama</th>
+            <th>Servis</th>
+            <th>Tanggal Terdaftar</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           @foreach ($dokters as $dokter)
-            <tr>
+            <tr class="listDokter">
               <td>{{ $dokter->nama }}</td>
               <td>
                 @foreach ($dokter->service as $service)
                   <span class="badge badge-primary">{{ $service->nama }}</span>
                 @endforeach
               </td>
-              <td class="text-center" data-order="{{ $dokter->created_at }}">
-                {{ \Carbon\Carbon::parse($dokter->created_at)->format('d F Y') }}</td>
+              <td data-order="{{ $dokter->created_at }}">
+                {{ $dokter->created_at->translatedFormat('d F Y') }}</td>
               <td class="text-center">
                 <button id="btnShowDokter" data-id="{{ $dokter->id }}" class="btn btn-sm btn-primary mr-1">Detail</button>
                 <button id="btnEditDokter" data-id="{{ $dokter->id }}" class="btn btn-sm btn-secondary ml-1">Edit</button>
@@ -49,7 +49,7 @@
           <div class="col align-self-center">
             <div class="d-flex my-5 justify-content-center">
               <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Memuat...</span>
               </div>
             </div>
           </div>
@@ -75,7 +75,18 @@
         });
       });
 
-      $('#listDokter #btnEditDokter').click(function() {
+      $('.listDokter #btnShowDokter').click(function() {
+        const id = $(this).data('id');
+        $('#modalDokter').modal('show');
+        $('#modalDokterContent').html('');
+        $('#modalLoading').show();
+        $.get(`dokter/${id}`, function(res) {
+          $('#modalLoading').hide();
+          $('#modalDokterContent').html(res);
+        });
+      });
+
+      $('.listDokter #btnEditDokter').click(function() {
         const id = $(this).data('id');
         $('#modalDokter').modal('show');
         $('#modalDokterContent').html('');

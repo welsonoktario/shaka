@@ -13,7 +13,7 @@
       <input type="text" name="nama" class="form-control" id="nama" value="{{ $dokter->nama }}">
     </div>
     <div class="mb-3">
-      <label class="from-label">Servis</label>
+      <label class="form-label">Servis</label>
       @foreach ($services as $service)
         <div class="form-check">
           <input id="service{{ $service->id }}" class="form-check-input" type="checkbox" name="services[]"

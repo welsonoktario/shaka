@@ -6,7 +6,9 @@
     <div class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Jadwal</h1>
     </div>
-    <div id="calendarJadwal"></div>
+    <div class="p-4 mb-4 bg-white rounded-lg shadow-lg">
+      <div id="calendarJadwal"></div>
+    </div>
   </div>
 
   <div id="modalJadwal" class="modal fade" tabindex="-1">
@@ -18,7 +20,7 @@
           <div class="col align-self-center">
             <div class="d-flex my-5 justify-content-center">
               <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Memuat...</span>
               </div>
             </div>
           </div>
@@ -54,6 +56,7 @@
         selectable: true,
         editable: true,
         allDaySlot: false,
+        height: 'auto',
         views: {
           week: {
             slotLabelInterval: '00:30:00',

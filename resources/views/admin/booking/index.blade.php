@@ -15,20 +15,20 @@
           <tr>
             <th>Pasien</th>
             <th>Dokter</th>
-            <th class="text-center">Servis</th>
+            <th>Servis</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           @foreach ($bookings as $booking)
-            <tr id="listBooking">
+            <tr class="listBooking">
               <td>{{ $booking->pasien->user->nama }}</td>
               <td>{{ $booking->slot->jadwal->dokter->nama }}</td>
-              <td class="text-center">
+              <td>
                 <span class="badge badge-primary">{{ $booking->service->nama }}</span>
               </td>
               <td class="text-center">
-                <button id="btnEditBooking" data-id="{{ $booking->id }}" class="btn btn-primary">Detail</button>
+                <button id="btnShowBooking" class="btn btn-sm btn-primary" data-id="{{ $booking->id }}">Detail</button>
               </td>
             </tr>
           @endforeach
@@ -46,7 +46,7 @@
           <div class="col align-self-center">
             <div class="d-flex my-5 justify-content-center">
               <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Memuat...</span>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
         });
       });
 
-      $('#listBooking #btnEditBooking').click(function() {
+      $('.listBooking #btnShowBooking').click(function() {
         const id = $(this).data('id');
         $('#modalBooking').modal('show');
         $('#modalBookingContent').html('');
