@@ -8,6 +8,7 @@ class Pasien extends Model
 {
     protected $fillable = ['user_id', 'tanggal_lahir', 'alamat'];
     protected $dates = ['tanggal_lahir'];
+    public $timestamps = false;
 
     public function user()
     {
