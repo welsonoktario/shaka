@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pasien;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -53,6 +54,8 @@ class RegisterController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'no_hp' => ['required', 'string', 'max:14', 'unique:users'],
             'email' => ['string', 'email', 'max:255', 'unique:users'],
+            'alamat' => ['required', 'string', 'max:255'],
+            'tanggal_lahir' => ['required', 'date', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -65,11 +68,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'nama' => $data['nama'],
             'no_hp' => $data['no_hp'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        Pasien::create([
+            'user_id' => $user->id,
+            'alamat' => $data['alamat'],
+            'tanggal_lahir' => $data['tanggal_lahir']
+        ]);
+
+        return $user;
     }
 }
