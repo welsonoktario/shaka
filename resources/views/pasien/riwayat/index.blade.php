@@ -28,7 +28,7 @@
     </div>
 @endsection
 
-@section('js')
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('#modalBooking').click(function() {
@@ -41,4 +41,4 @@
             });
         });
     </script>
-@endsection
+@endpush

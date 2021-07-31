@@ -30,8 +30,10 @@
               <td data-order="{{ $dokter->created_at }}">
                 {{ $dokter->created_at->translatedFormat('d F Y') }}</td>
               <td class="text-center">
-                <button id="btnShowDokter" data-id="{{ $dokter->id }}" class="btn btn-sm btn-primary mr-1">Detail</button>
-                <button id="btnEditDokter" data-id="{{ $dokter->id }}" class="btn btn-sm btn-secondary ml-1">Edit</button>
+                <button id="btnShowDokter" data-id="{{ $dokter->id }}"
+                  class="btn btn-sm btn-primary mr-1">Detail</button>
+                <button id="btnEditDokter" data-id="{{ $dokter->id }}"
+                  class="btn btn-sm btn-secondary ml-1">Edit</button>
               </td>
             </tr>
           @endforeach
@@ -62,7 +64,7 @@
   </div>
 @endsection
 
-@section('js')
+@push('scripts')
   <script>
     $(document).ready(function() {
       $('#btnTambahDokter').click(function() {
@@ -120,6 +122,5 @@
         ]
       });
     });
-
   </script>
-@endsection
+@endpush

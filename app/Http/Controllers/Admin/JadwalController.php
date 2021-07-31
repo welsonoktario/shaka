@@ -19,7 +19,15 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwals = Jadwal::with('dokter')->get();
+        $jadwals = Jadwal::with(['dokter', 'slot.booking'])->get();
+        foreach ($jadwals as $jadwal) {
+            $jadwal['slotKosong'] = 0;
+            foreach ($jadwal->slot as $slot) {
+                if (!$slot->booking) {
+                    $jadwal['slotKosong'] += 1;
+                }
+            }
+        }
         return view('admin.jadwal.index', ['jadwals' => $jadwals]);
     }
 

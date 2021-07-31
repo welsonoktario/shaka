@@ -35,7 +35,7 @@
     </div>
 @endsection
 
-@section('js')
+@push('scripts')
     <script>
         $(document).ready(function() {
             $.ajaxSetup({

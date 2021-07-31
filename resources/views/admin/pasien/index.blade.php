@@ -25,7 +25,8 @@
               <td>{{ $pasien->user->nama }}</td>
               <td>{{ $pasien->alamat }}</td>
               <td>{{ $pasien->tanggal_lahir->translatedFormat('d F Y') }}</td>
-              <td data-order="{{ $pasien->user->created_at }}">{{ $pasien->user->created_at->translatedFormat('d F Y') }}</td>
+              <td data-order="{{ $pasien->user->created_at }}">
+                {{ $pasien->user->created_at->translatedFormat('d F Y') }}</td>
               <td class="text-center">
                 <button id="btnDetailPasien" class="btn btn-sm btn-primary" data-id="{{ $pasien->id }}">Detail</button>
               </td>
@@ -58,7 +59,7 @@
   </div>
 @endsection
 
-@section('js')
+@push('scripts')
   <script>
     $(document).ready(function() {
       $('#btnTambahPasien').click(function() {
@@ -109,6 +110,5 @@
         ]
       });
     });
-
   </script>
-@endsection
+@endpush

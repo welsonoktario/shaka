@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
+    // protected $appends = ['slotKosong'];
     protected $fillable = ['start', 'end', 'tanggal', 'jumlah_slot'];
     public $timestamps = false;
 

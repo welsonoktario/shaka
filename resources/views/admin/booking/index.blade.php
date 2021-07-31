@@ -58,7 +58,7 @@
   </div>
 @endsection
 
-@section('js')
+@push('scripts')
   <script>
     $(document).ready(function() {
       $('.toast').toast();
@@ -143,4 +143,4 @@
     }
 
   </script>
-@endsection
+@endpush

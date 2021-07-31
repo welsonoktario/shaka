@@ -48,7 +48,7 @@
     </div>
 @endsection
 
-@section('js')
+@push('scripts')
     <script>
         $(document).ready(function() {
             const calendarBulan = new FullCalendar.Calendar($('#calendarBulan')[0], {
@@ -74,4 +74,4 @@
             calendarMinggu.render();
         });
     </script>
-@endsection
+@endpush

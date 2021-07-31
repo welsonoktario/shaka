@@ -3,7 +3,8 @@
 @section('title', 'Jadwal')
 @section('content')
   <div class="container-fluid overflow-auto">
-    <div class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block d-sm-flex align-items-center justify-content-between mb-4">
+    <div
+      class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Jadwal</h1>
     </div>
     <div class="p-4 mb-4 bg-white rounded-lg shadow-lg">
@@ -32,7 +33,7 @@
   </div>
 @endsection
 
-@section('js')
+@push('scripts')
   <script>
     $(document).ready(function() {
       $.ajaxSetup({
@@ -47,7 +48,10 @@
           id: jadwal.id,
           start: `${jadwal.tanggal} ${jadwal.start}`,
           end: `${jadwal.tanggal} ${jadwal.end}`,
-          title: `${jadwal.dokter.nama} (${jadwal.jumlah_slot} slot)`,
+          title: jadwal.dokter.nama,
+          extendedProps: {
+            slotKosong: jadwal.slotKosong
+          }
         }
       });
       const calendar = new FullCalendar.Calendar($("#calendarJadwal")[0], {
@@ -57,6 +61,7 @@
         editable: true,
         allDaySlot: false,
         height: 'auto',
+        slotMinTime: '08:30:00',
         views: {
           week: {
             slotLabelInterval: '00:30:00',
@@ -70,6 +75,7 @@
         },
         events,
         select: function(cell) {
+          console.log(cell)
           const start = moment(cell.startStr).format('YYYY-MM-DD HH:mm:ss');
           const end = moment(cell.endStr).format('YYYY-MM-DD HH:mm:ss');
           const tanggal = moment(cell.endStr).format('YYYY-MM-DD');
@@ -158,10 +164,21 @@
               });
             });
           });
+        },
+        eventContent: function(cell) {
+          const event = cell.event;
+          return {
+            html: `
+              <div class="d-flex flex-column justify-content-center">
+                <div class="badge bg-primary p-1 text-center">${cell.timeText}</div>
+                <p class="fs-5">${event.title}</p>
+                <p>${event.extendedProps.slotKosong} slot tersisa</p>
+              </div>
+            `
+          }
         }
       });
       calendar.render();
     });
-
   </script>
-@endsection
+@endpush

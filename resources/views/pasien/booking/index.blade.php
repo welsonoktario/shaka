@@ -49,7 +49,7 @@
   </div>
 @endsection
 
-@section('js')
+@push('scripts')
   <script>
     const user = {!! json_encode(auth()->user()) !!};
     const jadwals = {!! $jadwals !!};
@@ -135,4 +135,4 @@
     }
 
   </script>
-@endsection
+@endpush
