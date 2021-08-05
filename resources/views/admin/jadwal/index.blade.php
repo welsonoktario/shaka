@@ -169,7 +169,7 @@
           const event = cell.event;
           return {
             html: `
-              <div class="d-flex flex-column justify-content-center">
+              <div class="pe-pointer d-flex flex-column justify-content-center">
                 <div class="badge bg-primary p-1 text-center">${cell.timeText}</div>
                 <p class="fs-5">${event.title}</p>
                 <p>${event.extendedProps.slotKosong} slot tersisa</p>

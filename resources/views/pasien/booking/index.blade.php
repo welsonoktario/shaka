@@ -3,7 +3,8 @@
 @section('title', 'Jadwal')
 @section('content')
   <div class="container-fluid overflow-auto">
-    <div class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block d-sm-flex align-items-center justify-content-between mb-4">
+    <div
+      class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Booking</h1>
     </div>
     <div class="p-4 mb-4 bg-white rounded-lg shadow-lg">
@@ -52,9 +53,9 @@
 @push('scripts')
   <script>
     const user = {!! json_encode(auth()->user()) !!};
-    const jadwals = {!! $jadwals !!};
+    let jadwals = {!! $jadwals !!};
 
-    $(document).ready(function() {
+    $(function() {
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -67,16 +68,32 @@
           start: `${jadwal.tanggal} ${jadwal.start}`,
           end: `${jadwal.tanggal} ${jadwal.end}`,
           title: `${jadwal.dokter.nama} (${jadwal.jumlah_slot} slot)`,
+          extendedProps: {
+            slotKosong: jadwal.slotKosong
+          }
         }
       });
       const calendar = new FullCalendar.Calendar($("#calendarJadwal")[0], {
         plugins: [interactionPlugin, timeGridPlugin],
-        initialView: 'timeGridWeek',
+        initialView: $(window).width() > 765 ? 'timeGridWeek' : 'timeGridThreeDay',
         editable: false,
         allDaySlot: false,
         height: 'auto',
+        slotMinTime: '08:30:00',
         views: {
           week: {
+            slotLabelInterval: '00:30:00',
+            slotLabelFormat: {
+              hour: '2-digit',
+              minute: '2-digit',
+              meridiem: 'short',
+              hour12: false
+            }
+          },
+          timeGridThreeDay: {
+            type: 'timeGrid',
+            buttonText: '3 day',
+            duration: { days: 3 },
             slotLabelInterval: '00:30:00',
             slotLabelFormat: {
               hour: '2-digit',
@@ -87,6 +104,18 @@
           }
         },
         events,
+        eventContent: function(cell) {
+          const event = cell.event;
+          return {
+            html: `
+              <div class="pe-pointer d-flex flex-column justify-content-center">
+                <div class="badge bg-primary p-1 text-center">${cell.timeText}</div>
+                <p class="fs-5">${event.title}</p>
+                <p>${event.extendedProps.slotKosong} slot tersisa</p>
+              </div>
+            `
+          }
+        },
         eventClick: function(event) {
           $('#modalBooking').modal('show');
           $('#modalBookingContent').html('');
@@ -125,14 +154,12 @@
         service
       }, function(res) {
         if (res === 'ok') {
-          const hasil = `Slot ${$(`#slot${slot}`).data('nomor')}: ${user.nama}`
+          const hasil = `Slot ${$(`#slot${slot}`).data('nomor')}: ${user.nama}`;
+          $('#btnTambahBooking').replaceWith('<span> - </span>');
           $('#modalTambahBooking').modal('hide');
           $(`#slot${slot}`).html(hasil);
-        } else {
-
         }
       })
     }
-
   </script>
 @endpush

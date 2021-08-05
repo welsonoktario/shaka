@@ -1,6 +1,8 @@
 <div class="modal-header">
     <h5 class="modal-title">Tambah Booking</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
 </div>
 <div class="modal-body">
   @csrf
@@ -16,5 +18,5 @@
 </div>
 <div class="modal-footer">
   <button id="btnBooking" class="btn btn-primary">Tambah</button>
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 </div>

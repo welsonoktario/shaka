@@ -28,6 +28,14 @@ class BookingController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
         $jadwals = Jadwal::with('dokter')->get();
+        foreach ($jadwals as $jadwal) {
+            $jadwal['slotKosong'] = 0;
+            foreach ($jadwal->slot as $slot) {
+                if (!$slot->booking) {
+                    $jadwal['slotKosong'] += 1;
+                }
+            }
+        }
 
         return view('pasien.booking.index', ['bookings' => $bookings, 'jadwals' => $jadwals]);
     }
@@ -80,7 +88,7 @@ class BookingController extends Controller
         $start = Carbon::create($booking->slot->jadwal->start)->toTimeString();
         $end = Carbon::create($booking->slot->jadwal->end)->toTimeString();
 
-        return view(request('tipe') === 'pasien' ? 'pasien.booking.show' : 'admin.booking.show', [
+        return view('pasien.booking.show', [
             'dokter' => $booking->slot->jadwal->dokter,
             'pasien' => $booking->pasien,
             'jadwal' => $booking->slot->jadwal,
