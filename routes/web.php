@@ -37,7 +37,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
 });
 
 Route::group(['prefix' => 'dokter', 'middleware' => ['web', 'dokter']], function () {
-    Route::redirect('/', 'dokter/jadwal', 302);
+    Route::redirect('/', 'dokter/home', 302);
+
+    Route::prefix('home')->group(function () {
+        Route::get('/', 'Dokter\HomeController@index')->name('dokter.home.index');
+        Route::get('{id}', 'Dokter\HomeController@createTransaksi')->name('dokter.home.createTransaksi');
+        Route::patch('{id}/handle', 'Dokter\HomeController@handleBooking')->name('dokter.home.handleBooking');
+    });
 
     Route::resource('jadwal', 'Dokter\JadwalController', [
         'only' => ['index', 'show'],

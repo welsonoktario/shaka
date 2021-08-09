@@ -10,25 +10,30 @@
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}"></script>
-  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
-
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body>
-  <div class="row vh-100" style="max-height: 100vh; max-width: 100vw">
-    <div class="col-2 bg-dark">
-      @include('dokter.components.sidebar')
-    </div>
-    <div class="col-10">
-      @yield('content')
+  <div id="wrapper">
+    @include('dokter.components.loading')
+    @include('dokter.components.sidebar')
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content" style="max-height: 100vh">
+        @include('dokter.components.navbar')
+        @yield('content')
+      </div>
     </div>
   </div>
+
+  <!-- Scripts -->
+  @routes
+  <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
   @stack('scripts')
 </body>
 

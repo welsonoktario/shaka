@@ -15,7 +15,25 @@
   <ul class="list-group list-group-flush">
     @foreach ($jadwal->slot as $slot)
       @if (isset($slot->booking))
-        <li class="list-group-item">Slot {{ $slot->nomor }}: {{ $slot->booking->pasien->user->nama }}</li>
+        <li class="list-group-item">
+          <span class="align-middle mr-1">Slot {{ $slot->nomor }}: {{ $slot->booking->pasien->user->nama }}</span>
+          @switch($slot->booking->status)
+              @case('Pending')
+                <span class="badge badge-warning align-middle">{{ $slot->booking->status }}</span>
+                @break
+              @case('Diproses')
+                <span class="badge badge-primary align-middle">{{ $slot->booking->status }}</span>
+                @break
+              @case('Dilewati')
+                <span class="badge badge-secondary align-middle">{{ $slot->booking->status }}</span>
+                @break
+              @case('Selesai')
+                <span class="badge badge-success align-middle">{{ $slot->booking->status }}</span>
+                @break
+              @default
+
+          @endswitch
+        </li>
       @else
         <li id="slot{{ $slot->id }}" data-nomor="{{ $slot->nomor }}" class="list-group-item">
           <span>Slot {{ $slot->nomor }}: </span>

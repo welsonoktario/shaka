@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    protected $fillable = ['slot_id', 'pasien_id', 'service_id', 'tanggal'];
+    protected $fillable = ['slot_id', 'pasien_id', 'service_id', 'status', 'tanggal'];
     public $timestamps = false;
 
     public function transaksi()

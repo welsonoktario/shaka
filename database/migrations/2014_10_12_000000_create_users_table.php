@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->foreignId('role_id')
                 ->constrained()
+                ->default(3)
                 ->cascadeOnDelete();
             $table->string('nama');
             $table->string('no_hp')->unique();
