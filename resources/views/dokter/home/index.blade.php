@@ -49,6 +49,17 @@
                 </div>
               </div>
             </div>
+          @else
+            <div class="col">
+              <div class="card card-booking">
+                <div class="card-header bg-primary text-white">Slot {{ $loop->iteration }}</div>
+                <div class="card-body">
+                  <h4 class="card-title">Kosong</h4>
+                </div>
+                <div class="card-footer bg-white">
+                </div>
+              </div>
+            </div>
           @endif
         @endforeach
     @endif
