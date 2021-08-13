@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h5 class="modal-title">Pasien</h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">×</span>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
   </button>
 </div>
 <div class="modal-body">
@@ -16,19 +16,19 @@
     @foreach ($jadwal->slot as $slot)
       @if (isset($slot->booking))
         <li class="list-group-item">
-          <span class="align-middle mr-1">Slot {{ $slot->nomor }}: {{ $slot->booking->pasien->user->nama }}</span>
+          <span class="align-middle me-1">Slot {{ $slot->nomor }}: {{ $slot->booking->pasien->user->nama }}</span>
           @switch($slot->booking->status)
               @case('Pending')
-                <span class="badge badge-warning align-middle">{{ $slot->booking->status }}</span>
+                <span class="badge bg-warning align-middle">{{ $slot->booking->status }}</span>
                 @break
               @case('Diproses')
-                <span class="badge badge-primary align-middle">{{ $slot->booking->status }}</span>
+                <span class="badge bg-primary align-middle">{{ $slot->booking->status }}</span>
                 @break
               @case('Dilewati')
-                <span class="badge badge-secondary align-middle">{{ $slot->booking->status }}</span>
+                <span class="badge bg-secondary align-middle">{{ $slot->booking->status }}</span>
                 @break
               @case('Selesai')
-                <span class="badge badge-success align-middle">{{ $slot->booking->status }}</span>
+                <span class="badge bg-success align-middle">{{ $slot->booking->status }}</span>
                 @break
               @default
 
@@ -49,5 +49,5 @@
   </ul>
 </div>
 <div class="modal-footer d-flex justify-content-between">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
 </div>

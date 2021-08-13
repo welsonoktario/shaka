@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dokter;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Jadwal;
+use App\Models\Slot;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,11 +20,17 @@ class HomeController extends Controller
             ['user_id', Auth::id()],
             ['tanggal', Carbon::now()->toDateString()]
         ]);
+        $antrian = $jadwal->slot->filter(
+            fn ($slot) => ($slot->booking != null && $slot->booking->status == 'Pending' ||
+                $slot->booking != null && $slot->booking->status == 'Diproses')
+        )->values();
 
-        return view('dokter.home.index', ['jadwal' => $jadwal]);
+        // return response()->json($antrian[0]);
+        return view('dokter.home.index', ['jadwal' => $jadwal, 'antrian' => $antrian[0]->nomor]);
     }
 
-    public function createTransaksi($id) {
+    public function createTransaksi($id)
+    {
         $booking = Booking::with(['service', 'pasien.user'])->find($id);
 
         return view('dokter.home.create', ['booking' => $booking]);
@@ -36,14 +43,21 @@ class HomeController extends Controller
 
             switch ($request->tipe) {
                 case 'selesai':
-                    Transaksi::create([
+                    /* Transaksi::create([
                         'booking_id' => $booking->id,
                         'total' => $request->total,
                         'tanggal' => Carbon::now()
-                    ]);
+                    ]); */
                     $booking->update([
                         'status' => 'Selesai'
                     ]);
+                    $booking = Booking::with('slot')
+                        ->whereNotIn('id', [$booking->id])
+                        ->where('status', 'Pending')
+                        ->orWhere('status', 'Diproses')
+                        ->first();
+
+                    return response()->json(['status' => 'ok', 'booking' => $booking]);
                     break;
                 case 'proses':
                     $booking->update([

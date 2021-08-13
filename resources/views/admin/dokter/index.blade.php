@@ -5,40 +5,46 @@
   <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800 d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">Dokter</h1>
-      <button id="btnTambahDokter" class="d-sm-block btn btn-sm btn-primary shadow-sm"><i
-          class="fas fa-plus fa-sm text-white-50"></i> Tambah Dokter</button>
+      <button id="btnTambahDokter" class="d-sm-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus fa-sm text-white-50"></i>
+        <span class="ms-1 text-white">Tambah Dokter</span>
+      </button>
     </div>
-    <div class="table-responsive p-4 rounded-lg bg-white shadow-lg">
-      <table id="tableDokter" class="table" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Nama</th>
-            <th>Servis</th>
-            <th>Tanggal Terdaftar</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($dokters as $dokter)
-            <tr class="listDokter">
-              <td>{{ $dokter->nama }}</td>
-              <td>
-                @foreach ($dokter->service as $service)
-                  <span class="badge badge-primary">{{ $service->nama }}</span>
-                @endforeach
-              </td>
-              <td data-order="{{ $dokter->created_at }}">
-                {{ $dokter->created_at->translatedFormat('d F Y') }}</td>
-              <td class="text-center">
-                <button id="btnShowDokter" data-id="{{ $dokter->id }}"
-                  class="btn btn-sm btn-primary mr-1">Detail</button>
-                <button id="btnEditDokter" data-id="{{ $dokter->id }}"
-                  class="btn btn-sm btn-secondary ml-1">Edit</button>
-              </td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="table-responsive p-1">
+          <table id="tableDokter" class="table" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Servis</th>
+                <th>Tanggal Terdaftar</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($dokters as $dokter)
+                <tr class="listDokter">
+                  <td>{{ $dokter->nama }}</td>
+                  <td>
+                    @foreach ($dokter->service as $service)
+                      <span class="badge bg-primary">{{ $service->nama }}</span>
+                    @endforeach
+                  </td>
+                  <td data-order="{{ $dokter->created_at }}">
+                    {{ $dokter->created_at->translatedFormat('d F Y') }}</td>
+                  <td class="text-center">
+                    <button id="btnShowDokter" data-id="{{ $dokter->id }}"
+                      class="btn btn-sm btn-primary me-1 text-white">Detail</button>
+                    <button id="btnEditDokter" data-id="{{ $dokter->id }}"
+                      class="btn btn-sm btn-secondary ms-1 text-white">Edit</button>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 

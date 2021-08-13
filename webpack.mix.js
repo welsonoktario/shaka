@@ -11,10 +11,11 @@ const mix = require("laravel-mix");
  |
  */
 
-mix.js("resources/js/app.js", "public/js")
+/* mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .copy("resources/js/sb-admin-2.min.js", "public/js")
     .copy(
         "node_modules/@fortawesome/fontawesome-free/webfonts",
         "public/webfonts"
-    );
+    ); */
+mix.sass("resources/sass/app.scss", "public/css");

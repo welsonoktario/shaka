@@ -3,24 +3,24 @@
     <i class="fa fa-bars"></i>
   </button>
 
-  <small class="ml-auto my-auto d-sm-block d-md-none d-lg-none d-xl-none text-center p-2">
+  <small class="ms-auto my-auto d-sm-block d-md-none d-lg-none d-xl-none text-center p-2">
     @yield('title')
   </small>
 
-  <ul class="navbar-nav ml-auto">
+  <ul class="navbar-nav ms-auto">
     <li class="nav-item dropdown no-arrow">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama }}</span>
+        <span class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama }}</span>
         <i class="fas fa-user text-black-50"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
         <a class="dropdown-item" href="#">
-          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+          <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
           Profile
         </a>
         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('formLogout').submit();">
-          <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+          <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
           Logout
         </a>
       </div>

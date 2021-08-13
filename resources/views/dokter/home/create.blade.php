@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h5 class="modal-title">Buat Transaksi</h5>
-  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">×</span>
+  <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+
   </button>
 </div>
 <div class="modal-body">
@@ -22,5 +22,5 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" id="btnBuat">Buat</button>
+  <button type="button" class="btn btn-primary text-white" id="btnBuat">Selesai</button>
 </div>

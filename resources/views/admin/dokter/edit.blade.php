@@ -1,9 +1,7 @@
 <form action="{{ route('admin.dokter.update', $dokter->id) }}" method="POST">
   <div class="modal-header">
     <h5 class="modal-title">Edit Dokter</h5>
-    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body">
     @method('PUT')
@@ -26,7 +24,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-primary">Edit</button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+    <button type="submit" class="btn btn-primary text-white">Edit</button>
+    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Tutup</button>
   </div>
 </form>
