@@ -92,7 +92,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-    @include('profile.footer')
+  @include('profile.footer')
   <!-- End Footer -->
 
   <div id="preloader"></div>
