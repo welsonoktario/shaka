@@ -8,13 +8,13 @@
   </small>
 
   <ul class="navbar-nav ms-auto">
-    <li class="nav-item dropdown no-arrow">
+    <li class="nav-item dropdown no-arrow me-2">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         <span class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama }}</span>
         <i class="fas fa-user text-black-50"></i>
       </a>
-      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+      <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
         <a class="dropdown-item" href="#">
           <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
           Profile

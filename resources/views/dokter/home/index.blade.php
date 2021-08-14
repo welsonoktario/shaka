@@ -7,10 +7,10 @@
     tidak ada jadwal hari ini:)
   @else
     <h3 id="antrian">No Antrian: Slot {{ $antrian }}</h3>
-    <div class="row row-cols-5">
+    <div class="row row-cols-1 row-cols-md-5">
       @foreach ($jadwal->slot as $slot)
         <div class="col">
-          <div class="card card-booking">
+          <div class="card my-2 my-md-0 card-booking">
             @if ($slot->booking)
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 fw-bold text-primary">Slot {{ $loop->iteration }}</h6>

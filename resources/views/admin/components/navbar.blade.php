@@ -8,7 +8,7 @@
   </small>
 
   <ul class="navbar-nav ms-auto">
-    <li class="nav-item dropdown no-arrow me-4">
+    <li class="nav-item dropdown no-arrow me-2">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         <span class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama }}</span>

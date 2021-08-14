@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('profile', function () {
+    return view('layouts.profile');
+});
+
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function () {
