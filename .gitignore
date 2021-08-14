@@ -3,6 +3,9 @@
 /public/storage
 /public/css
 /public/js
+/public/vendor
+/public/fonts
+/public/webfonts
 /storage/*.key
 /vendor
 .env
