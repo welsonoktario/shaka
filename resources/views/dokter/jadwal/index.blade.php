@@ -5,7 +5,11 @@
     <div class="mb-4 d-flex justify-content-between">
       <h2>Jadwal</h2>
     </div>
-    <div id="calendarJadwal"></div>
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div id="calendarJadwal"></div>
+      </div>
+    </div>
   </div>
 
   <div id="modalJadwal" class="modal fade" tabindex="-1">

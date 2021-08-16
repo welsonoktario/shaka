@@ -3,14 +3,19 @@
 @section('title', 'Jadwal Hari Ini')
 @section('content')
 <div class="px-4 py-2">
+  <div class="mb-4 d-flex justify-content-between">
+    <h2>Booking</h2>
+  </div>
+
   @if (!$jadwal)
-    tidak ada jadwal hari ini:)
+    tidak ada jadwal hari ini 😁
   @else
-    <h3 id="antrian">No Antrian: Slot {{ $antrian }}</h3>
+    <h4 id="antrian" class="mb-4">No Antrian: <span
+        class="fw-bold">{{ $antrian['nomor'] != '-' ? "Slot {$antrian['nomor']}" : 'Kosong' }}</span></h4>
     <div class="row row-cols-1 row-cols-md-5">
       @foreach ($jadwal->slot as $slot)
         <div class="col">
-          <div class="card my-2 my-md-0 card-booking">
+          <div class="card my-2 my-md-0 card-booking shadow-sm">
             @if ($slot->booking)
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 fw-bold text-primary">Slot {{ $loop->iteration }}</h6>
@@ -40,11 +45,16 @@
                     Selesai
                   </button>
                 @else
-                  @if ($slot->nomor == $antrian)
+                  @if ($slot->nomor == $antrian['nomor'])
                     <button class="btn btn-primary btn-aksi text-white" data-id="{{ $slot->booking->id }}"
                       data-tipe="proses">Proses</button>
-                    <button class="btn btn-secondary btn-aksi text-white" data-id="{{ $slot->booking->id }}"
-                      data-tipe="lewati">Lewati</button>
+                    @if ($slot->nomor == $antrian['terakhir'])
+                      <button class="btn btn-secondary btn-aksi text-white" data-id="{{ $slot->booking->id }}"
+                        data-tipe="lewati" disabled>Lewati</button>
+                    @else
+                      <button class="btn btn-secondary btn-aksi text-white" data-id="{{ $slot->booking->id }}"
+                        data-tipe="lewati">Lewati</button>
+                    @endif
                   @else
                     <button class="btn btn-primary btn-aksi text-white" data-id="{{ $slot->booking->id }}"
                       data-tipe="proses" disabled>Proses</button>
@@ -68,6 +78,14 @@
           </div>
         </div>
       @endforeach
+
+      <form id="formHandleBooking" method="POST" hidden>
+        @method('PATCH')
+        @csrf
+        <input type="text" name="tipe" id="tipe" hidden>
+        <input type="text" name="total" id="total" hidden>
+      </form>
+
   @endif
 </div>
 
@@ -151,11 +169,18 @@
     });
   }
 
-  function lewatiBooking(id) {
-    $(el).attr('data-tipe', 'selesai');
-    $(el).data('tipe', 'selesai');
+  /* function lewatiBooking(id, booking) {
+    $(`.btn-aksi[data-id='${id}'][data-tipe='proses']`).prop('disabled', true);
+    $(`.btn-aksi[data-id='${id}'][data-tipe='lewati']`).prop('disabled', true);
     $(`.badge[data-id='${id}']`).removeClass('bg-warning').addClass('bg-secondary');
     $(`.badge[data-id='${id}']`).text('Dilewati');
+    if (booking != 'kosong') {
+      $(`.btn-aksi[data-id='${booking.id}'][data-tipe='proses']`).prop('disabled', false);
+      $(`.btn-aksi[data-id='${booking.id}'][data-tipe='lewati']`).prop('disabled', false);
+      $('#antrian').html(`No Antrian: <span class="fw-bold">Slot ${booking.slot.nomor}</span>`);
+    } else {
+      $('#antrian').html(`No Antrian: <span class="fw-bold text-success">Selesai</span>`);
+    }
   }
 
   function prosesBooking(id) {
@@ -171,16 +196,24 @@
   function selesaiBooking(id, booking) {
     $(`.btn-aksi[data-id='${id}'][data-tipe='selesai']`).prop('disabled', true);
     $(`.btn-aksi[data-id='${id}'][data-tipe='lewati']`).remove();
-    $(`.btn-aksi[data-id='${booking.id}'][data-tipe='proses']`).prop('disabled', false);
-    $(`.btn-aksi[data-id='${booking.id}'][data-tipe='lewati']`).prop('disabled', false);
     $(`.badge[data-id='${id}']`).removeClass('bg-primary').addClass('bg-success');
     $(`.badge[data-id='${id}']`).text('Selesai');
-    $('#antrian').text(`No Antrian: Slot ${booking.slot.nomor}`);
+    if (booking != 'kosong') {
+      $(`.btn-aksi[data-id='${booking.id}'][data-tipe='proses']`).prop('disabled', false);
+      $(`.btn-aksi[data-id='${booking.id}'][data-tipe='lewati']`).prop('disabled', false);
+      $('#antrian').html(`No Antrian: <span class="fw-bold">Slot ${booking.slot.nomor}</span>`);
+    } else {
+      $('#antrian').html(`No Antrian: <span class="fw-bold text-success">Selesai</span>`);
+    }
     $('#modalTransaksi').modal('hide');
-  }
+  } */
 
-  function handleBooking(id, tipe, total = null) {
-    $.ajax({
+  function handleBooking(id, tipe, total = 0) {
+    $('#formHandleBooking').prop('action', route('dokter.home.handleBooking', id));
+    $('#total').prop('value', total);
+    $('#tipe').prop('value', tipe);
+    $('#formHandleBooking').submit();
+    /* $.ajax({
       url: route('dokter.home.handleBooking', id),
       type: 'PATCH',
       data: {
@@ -188,15 +221,17 @@
         total
       },
       success: function(res) {
+        let bookingBaru;
         switch (tipe) {
           case 'proses':
             prosesBooking(id);
             break;
           case 'lewati':
-            lewatiBooking(id);
+            bookingBaru = res.booking;
+            lewatiBooking(id, bookingBaru);
             break;
           case 'selesai':
-            const bookingBaru = res.booking;
+            bookingBaru = res.booking;
             selesaiBooking(id, bookingBaru);
             break;
           default:
@@ -206,7 +241,7 @@
       error: function(err) {
         console.log('err ', err);
       }
-    });
+    }); */
   }
 </script>
 @endpush

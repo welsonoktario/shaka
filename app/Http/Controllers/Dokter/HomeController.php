@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dokter;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Jadwal;
-use App\Models\Slot;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,10 +22,23 @@ class HomeController extends Controller
         $antrian = $jadwal->slot->filter(
             fn ($slot) => ($slot->booking != null && $slot->booking->status == 'Pending' ||
                 $slot->booking != null && $slot->booking->status == 'Diproses')
-        )->values();
+        );
 
-        // return response()->json($antrian[0]);
-        return view('dokter.home.index', ['jadwal' => $jadwal, 'antrian' => $antrian[0]->nomor]);
+        /* return response()->json(['jadwal' => $jadwal,
+            'antrian' => [
+                'nomor' => count($antrian) ? $antrian->first()->nomor : '-',
+                'pertama' => count($antrian) ? $antrian->first()->nomor : '-',
+                'terakhir' => $antrian->last()->nomor
+            ]
+        ]); */
+        return view('dokter.home.index', [
+            'jadwal' => $jadwal,
+            'antrian' => [
+                'nomor' => count($antrian) ? $antrian->first()->nomor : '-',
+                'pertama' => count($antrian) ? $antrian->first()->nomor : '-',
+                'terakhir' => count($antrian) ? $antrian->last()->nomor : '-'
+            ]
+        ]);
     }
 
     public function createTransaksi($id)
@@ -51,13 +63,13 @@ class HomeController extends Controller
                     $booking->update([
                         'status' => 'Selesai'
                     ]);
-                    $booking = Booking::with('slot')
+                    /* $booking = Booking::with('slot')
                         ->whereNotIn('id', [$booking->id])
                         ->where('status', 'Pending')
                         ->orWhere('status', 'Diproses')
                         ->first();
 
-                    return response()->json(['status' => 'ok', 'booking' => $booking]);
+                    return response()->json(['status' => 'ok', 'booking' => $booking ?: 'kosong']); */
                     break;
                 case 'proses':
                     $booking->update([
@@ -76,6 +88,6 @@ class HomeController extends Controller
             return response()->json(['status' => $e->getMessage()], 500);
         }
 
-        return response()->json(['status' => 'ok']);
+        return redirect()->route('dokter.home.index');
     }
 }

@@ -21,6 +21,6 @@
     </ul>
 </div>
 <div class="modal-footer d-flex justify-content-between">
-    <button id="btnDelete" class="btn btn-danger">Hapus</button>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+    <button id="btnDelete" class="btn btn-danger text-white">Hapus</button>
+    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Tutup</button>
 </div>
