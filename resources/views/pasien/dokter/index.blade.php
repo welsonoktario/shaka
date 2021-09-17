@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('title', 'Dokter')
 @section('content')
@@ -35,9 +35,7 @@
                     {{ $dokter->created_at->translatedFormat('d F Y') }}</td>
                   <td class="text-center">
                     <button id="btnShowDokter" data-id="{{ $dokter->id }}"
-                      class="btn btn-sm btn-primary me-1 text-white">Detail</button>
-                    <button id="btnEditDokter" data-id="{{ $dokter->id }}"
-                      class="btn btn-sm btn-secondary ms-1 text-white">Edit</button>
+                      class="btn btn-sm btn-primary text-white">Detail</button>
                   </td>
                 </tr>
               @endforeach
