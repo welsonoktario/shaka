@@ -24,7 +24,7 @@
   <li class="nav-item{{ Route::currentRouteName() === 'pasien.dokter.index' ? ' active' : '' }}">
     <a class="nav-link" href="{{ route('pasien.dokter.index') }}">
       <i class="fas fa-fw fa-user-md"></i>
-      <span>Booking</span></a>
+      <span>Dokter</span></a>
   </li>
 
   <!-- Divider -->
