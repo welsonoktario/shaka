@@ -65,4 +65,7 @@ Route::group(['prefix' => 'pasien', 'middleware' => 'web'], function () {
         'as' => 'pasien'
     ]);
     Route::resource('booking', 'Pasien\BookingController', ['as' => 'pasien']);
+    Route::resource('dokter', 'Pasine\DokterController', ['as' => 'pasien'])->only([
+        'index', 'show'
+    ]);
 });
