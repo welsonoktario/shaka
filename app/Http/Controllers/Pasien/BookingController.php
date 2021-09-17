@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pasien;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Dokter;
 use App\Models\Jadwal;
 use App\Models\Pasien;
 use App\Models\Service;
@@ -27,7 +28,7 @@ class BookingController extends Controller
             ->where('pasien_id', $pasien->id)
             ->orderBy('id', 'DESC')
             ->get();
-        $jadwals = Jadwal::with('dokter')->get();
+        $jadwals = Jadwal::with('dokter.user')->get();
         foreach ($jadwals as $jadwal) {
             $jadwal['slotKosong'] = 0;
             foreach ($jadwal->slot as $slot) {
@@ -47,7 +48,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $dokter = User::with('service')->find(request('dokter'));
+        $dokter = Dokter::with('service')->find(request('dokter'));
 
         return view('pasien.booking.create', ['services' => $dokter->service]);
     }
@@ -136,8 +137,7 @@ class BookingController extends Controller
      */
     public function destroy($id)
     {
-        $booking = Booking::find($id);
-        $booking->delete();
+        Booking::destroy($id);
 
         return redirect()->route('pasien.booking.index');
     }

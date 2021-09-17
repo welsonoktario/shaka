@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Dokter;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,13 +50,8 @@ class User extends Authenticatable
         return $this->hasOne(Pasien::class);
     }
 
-    public function service()
+    public function dokter()
     {
-        return $this->belongsToMany(Service::class, 'dokter_service');
-    }
-
-    public function jadwal()
-    {
-        return $this->hasMany(Jadwal::class);
+        return $this->hasOne(Dokter::class);
     }
 }

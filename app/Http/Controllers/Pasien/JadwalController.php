@@ -16,7 +16,7 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwals = Jadwal::with('dokter')->get();
+        $jadwals = Jadwal::with('dokter.user')->get();
         return view('pasien.jadwal.index', ['jadwals' => $jadwals]);
     }
 

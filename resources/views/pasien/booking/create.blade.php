@@ -17,6 +17,6 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button id="btnBooking" class="btn btn-primary">Tambah</button>
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+  <button id="btnBooking" class="btn btn-primary text-white">Tambah</button>
+  <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Tutup</button>
 </div>

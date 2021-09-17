@@ -8,7 +8,7 @@
     @csrf
     <div class="mb-3">
       <label for="nama" class="form-label">Nama</label>
-      <input type="text" name="nama" class="form-control" id="nama" value="{{ $dokter->nama }}">
+      <input type="text" name="nama" class="form-control" id="nama" value="{{ $dokter->user->nama }}">
     </div>
     <div class="mb-3">
       <label class="form-label">Servis</label>

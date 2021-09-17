@@ -47,13 +47,13 @@
         }
       });
 
-      const jadwals = {!! $jadwals !!};
+      const jadwals = @json($jadwals);
       const events = jadwals.map((jadwal) => {
         return {
           id: jadwal.id,
           start: `${jadwal.tanggal} ${jadwal.start}`,
           end: `${jadwal.tanggal} ${jadwal.end}`,
-          title: `${jadwal.dokter.nama} (${jadwal.jumlah_slot} slot)`,
+          title: `${jadwal.dokter.user.nama} (${jadwal.jumlah_slot} slot)`,
         }
       });
       const calendar = new FullCalendar.Calendar($("#calendarJadwal")[0], {

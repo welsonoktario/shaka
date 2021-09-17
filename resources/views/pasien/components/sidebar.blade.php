@@ -21,6 +21,12 @@
       <span>Booking</span></a>
   </li>
 
+  <li class="nav-item{{ Route::currentRouteName() === 'pasien.dokter.index' ? ' active' : '' }}">
+    <a class="nav-link" href="{{ route('pasien.dokter.index') }}">
+      <i class="fas fa-fw fa-user-md"></i>
+      <span>Booking</span></a>
+  </li>
+
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
 

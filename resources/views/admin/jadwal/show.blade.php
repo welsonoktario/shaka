@@ -5,7 +5,7 @@
 <div class="modal-body">
     <h5>Jadwal</h5>
     <ul class="list-group list-group-flush mb-3">
-        <li class="list-group-item">Dokter: {{ $jadwal->dokter->nama }}</li>
+        <li class="list-group-item">Dokter: {{ $jadwal->dokter->user->nama }}</li>
         <li class="list-group-item">Waktu Mulai: {{ $jadwal->start }}</li>
         <li class="list-group-item">Waktu Akhir: {{ $jadwal->end }}</li>
     </ul>

@@ -44,6 +44,8 @@ class UserSeeder extends Seeder
             ],
         ]);
 
+        User::find(2)->dokter()->create();
+
         User::find(3)->pasien()->create([
             'tanggal_lahir' => Carbon::create(1999, 10, 15),
             'alamat' => 'Jl. Jalan No. 8'

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dokter;
 use App\Models\Jadwal;
 use App\Models\Slot;
-use App\Models\User;
 use Carbon\Carbon;
-use DateTimeZone;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -19,7 +18,7 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwals = Jadwal::with(['dokter', 'slot.booking'])->get();
+        $jadwals = Jadwal::with(['dokter.user', 'slot.booking'])->get();
         foreach ($jadwals as $jadwal) {
             $jadwal['slotKosong'] = 0;
             foreach ($jadwal->slot as $slot) {
@@ -38,7 +37,7 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        $dokters = User::with('service')->where('role_id', 2)->get();
+        $dokters = Dokter::with(['user', 'service'])->get();
         $start = Carbon::parse(request('start'))->format('Y-m-d\TH:i');
         $end = Carbon::parse(request('end'))->format('Y-m-d\TH:i');
         $waktu = [$start, $end];
@@ -54,7 +53,7 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        $dokter = User::find($request->dokter);
+        $dokter = Dokter::find($request->dokter);
         $slots = [];
 
         $jadwal = $dokter->jadwal()->create([

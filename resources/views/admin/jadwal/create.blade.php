@@ -10,7 +10,7 @@
       <label for="dokter" class="form-label">Dokter</label>
       <select name="dokter" class="form-control" id="dokter" required>
         @foreach ($dokters as $dokter)
-          <option value="{{ $dokter->id }}">{{ $dokter->nama }}</option>
+          <option value="{{ $dokter->id }}">{{ $dokter->user->nama }}</option>
         @endforeach
       </select>
     </div>

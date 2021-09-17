@@ -67,7 +67,7 @@
           id: jadwal.id,
           start: `${jadwal.tanggal} ${jadwal.start}`,
           end: `${jadwal.tanggal} ${jadwal.end}`,
-          title: `${jadwal.dokter.nama} (${jadwal.jumlah_slot} slot)`,
+          title: `${jadwal.dokter.user.nama} (${jadwal.jumlah_slot} slot)`,
           extendedProps: {
             slotKosong: jadwal.slotKosong
           }
@@ -93,7 +93,9 @@
           timeGridThreeDay: {
             type: 'timeGrid',
             buttonText: '3 day',
-            duration: { days: 3 },
+            duration: {
+              days: 3
+            },
             slotLabelInterval: '00:30:00',
             slotLabelFormat: {
               hour: '2-digit',
@@ -110,7 +112,7 @@
             html: `
               <div class="pe-pointer d-flex flex-column justify-content-center">
                 <div class="badge bg-primary p-1 text-center">${cell.timeText}</div>
-                <p class="fs-5">${event.title}</p>
+                <p>${event.title}</p>
                 <p>${event.extendedProps.slotKosong} slot tersisa</p>
               </div>
             `
@@ -128,7 +130,7 @@
       });
       calendar.render();
 
-      $('#modalBookingContent').on('click', '#btnTambahBooking', function() {
+      $('#modalBookingContent').on('click', '.btnTambahBooking', function() {
         const {
           slot,
           dokter
@@ -154,12 +156,15 @@
         service
       }, function(res) {
         if (res === 'ok') {
-          const hasil = `Slot ${$(`#slot${slot}`).data('nomor')}: ${user.nama}`;
-          $('#btnTambahBooking').replaceWith('<span> - </span>');
+          const hasil =
+            `<span>Slot ${$(`#slot${slot}`).data('nomor')}: ${user.nama}</span> <span class="badge bg-warning align-middle">Pending</span>`;
+          $('#modalBookingContent .btnTambahBooking').each(function() {
+            $(this).replaceWith('<span> - </span>');
+          });
           $('#modalTambahBooking').modal('hide');
           $(`#slot${slot}`).html(hasil);
         }
-      })
+      });
     }
   </script>
 @endpush
