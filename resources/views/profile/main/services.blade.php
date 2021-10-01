@@ -11,24 +11,25 @@
     <div class="row">
       <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
         <div class="icon-box">
-          <div class="icon"><i class="fas fa-heartbeat"></i></div>
-          <h4><a href="">Lorem Ipsum</a></h4>
+          {{-- <div class="icon"><i class="fas fa-heartbeat"></i></div> --}}
+          <img src="{{asset('storage/behel.JPG')}}" width="100%">
+          <h2><a href="">Behel</a></h2>
           <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
         </div>
       </div>
 
-      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
         <div class="icon-box">
-          <div class="icon"><i class="fas fa-pills"></i></div>
-          <h4><a href="">Sed ut perspiciatis</a></h4>
+          <img src="{{asset('storage/scaling.JPG')}}" width="80%">
+          <h2><a href="">Scaling</a></h2>
           <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
         </div>
       </div>
 
       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
         <div class="icon-box">
-          <div class="icon"><i class="fas fa-hospital-user"></i></div>
-          <h4><a href="">Magni Dolores</a></h4>
+          <img src="{{asset('storage/Crown.JPG')}}" width="80%">
+          <h4><a href="">Crown gigi</a></h4>
           <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
         </div>
       </div>

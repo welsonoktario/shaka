@@ -7,7 +7,7 @@
     <h2>Booking</h2>
   </div>
 
-  @if (!$jadwal)
+  @if(!$jadwal)
     tidak ada jadwal hari ini 😁
   @else
     <h4 id="antrian" class="mb-4">No Antrian: <span

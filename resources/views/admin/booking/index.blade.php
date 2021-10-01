@@ -27,7 +27,7 @@
             @foreach ($bookings as $booking)
               <tr class="listBooking">
                 <td>{{ $booking->pasien->user->nama }}</td>
-                <td>{{ $booking->slot->jadwal->dokter->nama }}</td>
+                <td>{{ $booking->slot->jadwal->dokter->user->nama }}</td>
                 <td>
                   <span class="badge bg-primary">{{ $booking->service->nama }}</span>
                 </td>

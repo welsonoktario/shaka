@@ -4,12 +4,9 @@
     <div class="row">
       <div class="col-lg-4 d-flex align-items-stretch">
         <div class="content">
-          <h3>Why Choose Medilab?</h3>
+          <h3>Why Choose Shaka Dental Care?</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Duis aute irure dolor in reprehenderit
-            Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad
-            corporis.
+            Shaka dental care memiliki dokter yang sangat ahli dan berpengalaman
           </p>
           <div class="text-center">
             <a href="#" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>

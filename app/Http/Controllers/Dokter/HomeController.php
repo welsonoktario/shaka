@@ -16,21 +16,20 @@ class HomeController extends Controller
     public function index()
     {
         $jadwal = Jadwal::with('slot.booking.pasien.user')->firstWhere([
-            ['user_id', Auth::id()],
+            ['dokter_id', Auth::user()->dokter->id],
             ['tanggal', Carbon::now()->toDateString()]
         ]);
+
+        if (!$jadwal) {
+            return view('dokter.home.index', ['jadwal' => $jadwal]);
+        }
+
         $antrian = $jadwal->slot->filter(
             fn ($slot) => ($slot->booking != null && $slot->booking->status == 'Pending' ||
                 $slot->booking != null && $slot->booking->status == 'Diproses')
         );
 
-        /* return response()->json(['jadwal' => $jadwal,
-            'antrian' => [
-                'nomor' => count($antrian) ? $antrian->first()->nomor : '-',
-                'pertama' => count($antrian) ? $antrian->first()->nomor : '-',
-                'terakhir' => $antrian->last()->nomor
-            ]
-        ]); */
+
         return view('dokter.home.index', [
             'jadwal' => $jadwal,
             'antrian' => [
@@ -55,21 +54,21 @@ class HomeController extends Controller
 
             switch ($request->tipe) {
                 case 'selesai':
-                    /* Transaksi::create([
+                    Transaksi::create([
                         'booking_id' => $booking->id,
                         'total' => $request->total,
                         'tanggal' => Carbon::now()
-                    ]); */
+                    ]);
                     $booking->update([
                         'status' => 'Selesai'
                     ]);
-                    /* $booking = Booking::with('slot')
+                    $booking = Booking::with('slot')
                         ->whereNotIn('id', [$booking->id])
                         ->where('status', 'Pending')
                         ->orWhere('status', 'Diproses')
                         ->first();
 
-                    return response()->json(['status' => 'ok', 'booking' => $booking ?: 'kosong']); */
+                    // return response()->json(['status' => 'ok', 'booking' => $booking ?: 'kosong']);
                     break;
                 case 'proses':
                     $booking->update([

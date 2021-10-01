@@ -5,13 +5,13 @@
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Medilab</h3>
+            <h3>Shaka Dental Care</h3>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              Gunung Sari No.7<br>
+              Surabaya, Jawa Timur<br>
+              Indonesia <br><br>
+              <strong>Phone:</strong> 081216480681<br>
+              <strong>Email:</strong> shakadentalcare@gmail.com<br>
             </p>
           </div>
 

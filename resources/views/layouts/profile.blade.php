@@ -14,6 +14,7 @@
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link rel="icon" type="image/jpg" href="{{asset("storage/Capture.JPG")}}"/>
 
   <!-- Vendor CSS Files -->
   <link href="{{ asset('vendor/animate.css/animate.min.css') }}" rel="stylesheet">
@@ -78,7 +79,7 @@
     <!-- End Frequently Asked Questions Section -->
 
     <!-- ======= Testimonials Section ======= -->
-    @include('profile.main.testi')
+    @include('profile.main.testimonials')
     <!-- End Testimonials Section -->
 
     <!-- ======= Gallery Section ======= -->
