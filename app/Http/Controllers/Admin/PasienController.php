@@ -20,7 +20,7 @@ class PasienController extends Controller
         $user = user::all();
         $pasiens = Pasien::with('user')->get();
 
-        return view('admin.pasien.index', ['pasiens' => $pasiens]);
+        return view('admin.pasien.index', ['pasiens' => $pasiens, ]);
     }
 
     /**

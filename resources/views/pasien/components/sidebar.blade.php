@@ -2,7 +2,7 @@
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.home') }}">
     <div class="sidebar-brand-icon">
-      <img src="{{asset('storage/Capture.JPG')}}" width="50px" class="img-fluid">
+      <img src="{{asset('storage/Capture.JPG')}}" width="5  0px" class="img-fluid">
     </div>
     <div class="sidebar-brand-text mx-3">Shaka Dental Care</div>
   </a>
