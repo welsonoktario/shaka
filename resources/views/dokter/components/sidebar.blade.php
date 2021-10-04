@@ -2,10 +2,10 @@
 
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.home') }}">
-    <div class="sidebar-brand-icon rotate-n-15">
-      <i class="fas fa-laugh-wink"></i>
+    <div class="sidebar-brand-icon">
+      <img src="{{asset('storage/Capture.JPG')}}" width="50px" class="img-fluid">
     </div>
-    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+    <div class="sidebar-brand-text mx-3">Shaka Dental Care</div>
   </a>
 
   <!-- Divider -->

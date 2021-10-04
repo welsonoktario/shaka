@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <a class="logo me-auto"><img src="{{asset('storage/Capture.JPG')}}" width="50px" class="img-fluid"></a>
         <title>Laravel</title>
 
         <!-- Fonts -->

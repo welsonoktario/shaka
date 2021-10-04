@@ -13,6 +13,7 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <link rel="icon" type="image/jpg" href="{{asset("storage/Capture.JPG")}}"/>
 </head>
 
 <body>

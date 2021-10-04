@@ -18,6 +18,8 @@ class CreateDoktersTable extends Migration
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
+                $table->text('deskripsi');
+                $table->string('linkfoto');
             $table->timestamps();
         });
     }

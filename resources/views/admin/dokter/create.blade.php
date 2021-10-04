@@ -18,6 +18,14 @@
       <input type="tel" name="hp" class="form-control" id="hp">
     </div>
     <div class="mb-3">
+      <label for="text" class="form-label">Deskripsi Dokter</label>
+      <input type="des" name="deskripsi" class="form-control" id="deskripsi">
+    </div>
+    <div class="mb-3">
+      <label for="text" class="form-label">Foto Dokter (JPG/JPEG)</label>
+      <input type="file" name="file" class="form-control" id="file">
+    </div>
+    <div class="mb-3">
       <label for="nama" class="form-label">Password</label>
       <input type="password" name="password" class="form-control" id="password">
     </div>

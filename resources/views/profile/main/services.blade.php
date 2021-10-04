@@ -37,8 +37,8 @@
       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
         <div class="icon-box">
           <div class="icon"><i class="fas fa-dna"></i></div>
-          <h4><a href="">Nemo Enim</a></h4>
-          <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+          <h4><a href="">Bleaching gigi</a></h4>
+          <p>Bleaching gigi bisa membuat gigi anda putih</p>
         </div>
       </div>
 

@@ -3,7 +3,7 @@
 
     <div class="row">
       <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
-        <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox play-btn mb-4"></a>
+        <a href="https://www.youtube.com/watch?v=n2s86NcQtCc" class="glightbox play-btn mb-4"></a>
       </div>
 
       <div

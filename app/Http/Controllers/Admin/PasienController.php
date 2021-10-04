@@ -17,6 +17,7 @@ class PasienController extends Controller
      */
     public function index()
     {
+        $user = user::all();
         $pasiens = Pasien::with('user')->get();
 
         return view('admin.pasien.index', ['pasiens' => $pasiens]);
