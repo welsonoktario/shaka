@@ -1,4 +1,4 @@
-<form action="{{ route('admin.dokter.store') }}" method="POST">
+<form action="{{ route('admin.dokter.store') }}" method="POST" enctype="multipart/form-data">
   <div class="modal-header">
     <h5 class="modal-title">Tambah Dokter</h5>
     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -23,7 +23,7 @@
     </div>
     <div class="mb-3">
       <label for="text" class="form-label">Foto Dokter (JPG/JPEG)</label>
-      <input type="file" name="file" class="form-control" id="file">
+      <input type="file" name="foto" class="form-control" id="file" accept="image/*">
     </div>
     <div class="mb-3">
       <label for="nama" class="form-label">Password</label>

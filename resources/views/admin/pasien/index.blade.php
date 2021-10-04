@@ -17,6 +17,7 @@
           <thead>
             <tr>
               <th>Nama</th>
+              <th>No. HP</th>
               <th>Alamat</th>
               <th>Tanggal Lahir</th>
               <th>Tanggal Terdaftar</th>
@@ -27,6 +28,7 @@
             @foreach ($pasiens as $pasien)
               <tr class="listPasien">
                 <td>{{ $pasien->user->nama }}</td>
+                <td>{{ $pasien->user->no_hp }}</td>
                 <td>{{ $pasien->alamat }}</td>
                 <td>{{ $pasien->tanggal_lahir->translatedFormat('d F Y') }}</td>
                 <td data-order="{{ $pasien->user->created_at }}">
@@ -45,7 +47,7 @@
 </div>
 
 <div id="modalPasien" class="modal fade" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
 
       {{-- Loading --}}

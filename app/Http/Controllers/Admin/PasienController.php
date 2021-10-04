@@ -20,7 +20,7 @@ class PasienController extends Controller
         $user = user::all();
         $pasiens = Pasien::with('user')->get();
 
-        return view('admin.pasien.index', ['pasiens' => $pasiens, ]);
+        return view('admin.pasien.index', ['pasiens' => $pasiens,]);
     }
 
     /**
@@ -68,7 +68,7 @@ class PasienController extends Controller
      */
     public function show($id)
     {
-        $pasien = Pasien::with('user')->find($id);
+        $pasien = Pasien::with(['user', 'booking' => fn ($q) => $q->where('status', 'Selesai')->orderBy('tanggal', 'DESC'), 'booking.dokter', 'booking.transaksi'])->find($id);
 
         return view('admin.pasien.show', ['pasien' => $pasien]);
     }

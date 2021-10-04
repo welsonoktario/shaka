@@ -19,7 +19,7 @@ class CreateDoktersTable extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
                 $table->text('deskripsi');
-                $table->string('linkfoto');
+                $table->string('foto');
             $table->timestamps();
         });
     }

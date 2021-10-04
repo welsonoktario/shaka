@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    use \Znck\Eloquent\Traits\BelongsToThrough;
+
     protected $fillable = ['slot_id', 'pasien_id', 'service_id', 'status', 'tanggal'];
+    protected $dates = ['tanggal'];
     public $timestamps = false;
 
     public function transaksi()
@@ -27,5 +30,10 @@ class Booking extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function dokter()
+    {
+        return $this->belongsToThrough(Dokter::class, [Jadwal::class, Slot::class]);
     }
 }

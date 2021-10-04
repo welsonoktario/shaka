@@ -10,8 +10,8 @@
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
   <!-- Nav Item - Tables -->
-  <li class="nav-item{{ Route::currentRouteName() === 'pasien.home' ? ' active' : '' }}">
-    <a class="nav-link" href="{{ route('pasien.home') }}">
+  <li class="nav-item{{ Route::currentRouteName() === 'pasien.home.index' ? ' active' : '' }}">
+    <a class="nav-link" href="{{ route('pasien.home.index') }}">
       <i class="fas fa-fw fa-home"></i>
       <span>Home</span></a>
   </li>

@@ -64,7 +64,7 @@
         allDaySlot: false,
         height: 'auto',
         slotMinTime: '08:30:00',
-        slotMaxTime: '22:00:00',
+        slotMaxTime: '24:00:00',
         locale: 'id',
         views: {
           week: {

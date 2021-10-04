@@ -58,7 +58,10 @@ Route::group(['prefix' => 'dokter', 'middleware' => ['web', 'dokter']], function
 Route::group(['prefix' => 'pasien', 'middleware' => 'web'], function () {
     Route::redirect('/', 'pasien/home', 302);
 
-    Route::view('home', 'pasien.home.index')->name('pasien.home');
+    Route::resource('home', 'Pasien\HomeController', [
+        'only' => ['index', 'show'],
+        'as' => 'pasien'
+    ]);
 
     Route::resource('jadwal', 'Pasien\JadwalController', [
         'only' => ['index', 'show'],

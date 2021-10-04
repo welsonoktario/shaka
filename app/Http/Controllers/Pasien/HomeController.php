@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Pasien;
 
 use App\Http\Controllers\Controller;
-use App\Models\Dokter;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class DokterController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,13 @@ class DokterController extends Controller
      */
     public function index()
     {
-        $dokters = Dokter::with(['user', 'service'])->get();
+        $transaksis = Transaksi::with([
+            'pasien' => fn ($q) => $q->where('user_id', Auth::id()),
+            'dokter',
+            'service'
+        ])->get();
 
-        return view('pasien.dokter.index', ['dokters' => $dokters]);
+        return view('pasien.home.index', ['transaksis' => $transaksis]);
     }
 
     /**
@@ -28,8 +33,6 @@ class DokterController extends Controller
      */
     public function show($id)
     {
-        $dokter = Dokter::with(['user', 'service', 'jadwal'])->find($id);
-
-        return view('pasien.dokter.show', ['dokter' => $dokter]);
+        //
     }
 }

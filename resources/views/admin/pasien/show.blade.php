@@ -6,7 +6,34 @@
     </button>
   </div>
   <div class="modal-body">
-    {{ $pasien->alamat }}
+    <div>
+      <h5>Riwayat Booking</h5>
+
+      <table class="table w-100">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Dokter</th>
+            <th>Service</th>
+            <th>Catatan</th>
+            <th>Biaya</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($pasien->booking as $booking)
+            @if ($booking->status == 'Selesai')
+              <tr>
+                <td>{{ $booking->tanggal->translatedFormat('d F Y H:i:s') }}</td>
+                <td>{{ $booking->slot->jadwal->dokter->user->nama }}</td>
+                <td>{{ $booking->service->nama }}</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                <td>{{ 'Rp ' . number_format($booking->transaksi->total, 0, ',', '.') }}</td>
+              </tr>
+            @endif
+          @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Tutup</button>

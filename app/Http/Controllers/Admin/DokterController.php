@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DokterController extends Controller
 {
@@ -49,11 +50,15 @@ class DokterController extends Controller
             'password' => Hash::make($request->password),
             'no_hp' => $request->hp,
             'role_id' => 2,
-            'deskripsi' => $request->deskripsi,
-
         ]);
 
-        $dokter = $user->dokter->create();
+        $foto = $request->file('foto');
+        $foto->storeAs('dokter', "{$user->nama}.{$foto->extension()}");
+
+        $dokter = $user->dokter()->create([
+            'deskripsi' => $request->deskripsi,
+            'foto' => "public/dokter/{$user->nama}.{$foto->extension()}"
+        ]);
 
         $dokter->service()->attach($request->services);
 
