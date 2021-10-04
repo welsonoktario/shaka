@@ -50,7 +50,7 @@ class DokterController extends Controller
             'no_hp' => $request->hp,
             'role_id' => 2,
             'deskripsi' => $request->deskripsi,
-            'linkfoto' => $request->linkfoto,
+
         ]);
 
         $dokter = $user->dokter->create();
