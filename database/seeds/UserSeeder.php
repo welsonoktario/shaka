@@ -44,7 +44,10 @@ class UserSeeder extends Seeder
             ],
         ]);
 
-        User::find(2)->dokter()->create();
+        User::find(2)->dokter()->create([
+            'deskripsi' => 'Keren',
+            'foto' => 'public/dokter/1.png'
+        ]);
 
         User::find(3)->pasien()->create([
             'tanggal_lahir' => Carbon::create(1999, 10, 15),

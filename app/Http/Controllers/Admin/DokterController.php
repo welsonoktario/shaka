@@ -57,7 +57,7 @@ class DokterController extends Controller
 
         $dokter = $user->dokter()->create([
             'deskripsi' => $request->deskripsi,
-            'foto' => "public/dokter/{$user->nama}.{$foto->extension()}"
+            'foto' => "dokter/{$user->nama}.{$foto->extension()}"
         ]);
 
         $dokter->service()->attach($request->services);
