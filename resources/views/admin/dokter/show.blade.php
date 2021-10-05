@@ -11,25 +11,20 @@
     <div class="row">
       <dt class="col-4">Nama</dt>
       <dd class="col-8">{{ $dokter->user->nama }}</dd>
+      <dt class="col-4">Services</dt>
+      <dd class="col-8">
+        <div class="row">
+          @foreach ($dokter->service as $service)
+            <span class="badge bg-primary">{{ $service->nama }}</span>
+          @endforeach
+        </div>
+      </dd>
+      <dt class="col-4">Deskripsi</dt>
+      <dd class="col-8">{{ $dokter->deskripsi }}</dd>
     </div>
   </div>
 
-  <div class="mx-2">
-    <h5>Servis</h5>
-    <div class="row">
-      <dt class="col-4">Service</dt>
-      <ul class="col-8">
-        @foreach ($dokter->service as $service)
-          <li class="badge bg-primary">{{ $service->nama }}</li>
-        @endforeach
-      </ul>
-    </div>
-  </div>
 
-  <div class="mx-2">
-    <h5>Deskripsi</h5>
-    <p>{{ $dokter->deskripsi }}</p>
-  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Tutup</button>
