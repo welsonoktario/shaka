@@ -53,7 +53,7 @@ class LoginController extends Controller
         } else if ($user->role->id === 2) {
             return redirect()->route('dokter.jadwal.index');
         } else {
-            return redirect()->route('pasien.home.index3');
+            return redirect()->route('pasien.home.index');
         }
     }
 }

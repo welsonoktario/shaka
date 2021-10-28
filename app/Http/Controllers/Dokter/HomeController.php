@@ -15,28 +15,30 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $jadwal = Jadwal::with('slot.booking.pasien.user')->firstWhere([
+        $jadwals = Jadwal::with('slot.booking.pasien.user')->where([
             ['dokter_id', Auth::user()->dokter->id],
             ['tanggal', Carbon::now()->toDateString()]
-        ]);
+        ])->get();
 
-        if (!$jadwal) {
-            return view('dokter.home.index', ['jadwal' => $jadwal]);
+        if (!$jadwals) {
+            return view('dokter.home.index', ['jadwals' => $jadwals]);
         }
 
-        $antrian = $jadwal->slot->filter(
-            fn ($slot) => ($slot->booking != null && $slot->booking->status == 'Pending' ||
-                $slot->booking != null && $slot->booking->status == 'Diproses')
-        );
-
-
-        return view('dokter.home.index', [
-            'jadwal' => $jadwal,
-            'antrian' => [
+        foreach ($jadwals as $key => $jadwal) {
+            $antrian = $jadwal->slot->filter(
+                fn ($slot) => ($slot->booking != null && $slot->booking->status == 'Pending' ||
+                    $slot->booking != null && $slot->booking->status == 'Diproses')
+            );
+            $antrians = [
                 'nomor' => count($antrian) ? $antrian->first()->nomor : '-',
                 'pertama' => count($antrian) ? $antrian->first()->nomor : '-',
                 'terakhir' => count($antrian) ? $antrian->last()->nomor : '-'
-            ]
+            ];
+            $jadwals[$key]['antrian'] = $antrians;
+        }
+
+        return view('dokter.home.index', [
+            'jadwals' => $jadwals
         ]);
     }
 
@@ -57,6 +59,7 @@ class HomeController extends Controller
                     Transaksi::create([
                         'booking_id' => $booking->id,
                         'total' => $request->total,
+                        'catatan' => $request->catatan,
                         'tanggal' => Carbon::now()
                     ]);
                     $booking->update([

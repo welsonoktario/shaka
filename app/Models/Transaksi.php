@@ -9,7 +9,7 @@ class Transaksi extends Model
     use \Znck\Eloquent\Traits\BelongsToThrough;
 
     protected $dates = ['tanggal'];
-    protected $fillable = ['booking_id', 'total', 'tanggal'];
+    protected $fillable = ['booking_id', 'total', 'catatan', 'tanggal'];
     public $timestamps = false;
 
     public function booking()

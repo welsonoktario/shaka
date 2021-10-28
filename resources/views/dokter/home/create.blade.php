@@ -12,13 +12,18 @@
     <li class="list-group-item">Service: {{ $booking->service->nama }}</li>
   </ul>
 
-  <div class="form-inline mx-1 mt-4">
+  <div class="form-inline mx-1 my-4">
     <div class="input-group w-100">
       <div class="input-group-prepend">
         <div class="input-group-text">Rp</div>
       </div>
       <input name="total" type="text" id="totalTransaksi" class="form-control" placeholder="Total">
     </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="catatan">Catatan</label>
+    <textarea name="catatan" id="catatanTransaksi" rows="2" class="form-control"></textarea>
   </div>
 </div>
 <div class="modal-footer">
