@@ -17,10 +17,9 @@ class HomeController extends Controller
     public function index()
     {
         $transaksis = Transaksi::with([
-            'pasien' => fn ($q) => $q->where('user_id', Auth::id()),
             'dokter',
             'service'
-        ])->get();
+        ])->whereHas('pasien', fn ($q) => $q->where('user_id', Auth::id()))->get();
 
         return view('pasien.home.index', ['transaksis' => $transaksis]);
     }

@@ -26,7 +26,7 @@
                   <td>{{ $transaksi->dokter->user->nama }}</td>
                   <td>{{ $transaksi->service->nama }}</td>
                   <td>{{ 'Rp ' . number_format($transaksi->total, 0, ',', '.') }}</td>
-                  <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                  <td>{{ $transaksi->catatan }}</td>
                 </tr>
               @endforeach
             </tbody>
