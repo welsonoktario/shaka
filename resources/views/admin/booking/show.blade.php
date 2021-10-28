@@ -29,15 +29,19 @@
     <div class="mx-2 mt-1">
       <div class="row">
         <dt class="col-4">Nama</dt>
-        <dd class="col-8">{{ $dokter->nama }}</dd>
+        <dd class="col-8">{{ $dokter->user->nama }}</dd>
       </div>
       <div class="row">
         <dt class="col-4">Email</dt>
-        <dd class="col-8">{{ $dokter->email }}</dd>
+        <dd class="col-8">{{ $dokter->user->email }}</dd>
       </div>
       <div class="row">
         <dt class="col-4">No. HP</dt>
-        <dd class="col-8">{{ $dokter->no_hp }}</dd>
+        <dd class="col-8">{{ $dokter->user->no_hp }}</dd>
+      </div>
+      <div class="row">
+        <dt class="col-4">Total</dt>
+        <dd class="col-8">{{ $booking->transaksi->total }}</dd>
       </div>
       <div class="row">
         <dt class="col-4">Service</dt>

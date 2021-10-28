@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
     });
 
     Route::resource('dokter', 'Admin\DokterController', ['as' => 'admin']);
+    Route::resource('service', 'Admin\ServiceController', ['as' => 'admin']);
     Route::resource('pasien', 'Admin\PasienController', ['as' => 'admin']);
     Route::resource('jadwal', 'Admin\JadwalController', ['as' => 'admin']);
     Route::resource('booking', 'Admin\BookingController', ['as' => 'admin']);
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
 
 Route::group(['prefix' => 'dokter', 'middleware' => ['web', 'dokter']], function () {
     Route::redirect('/', 'dokter/home', 302);
-
+//menggunakan prefix agar kita bisa menyederhanakan kodingan kita dan lebih teratur
     Route::prefix('home')->group(function () {
         Route::get('/', 'Dokter\HomeController@index')->name('dokter.home.index');
         Route::get('{id}', 'Dokter\HomeController@createTransaksi')->name('dokter.home.createTransaksi');

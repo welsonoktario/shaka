@@ -22,6 +22,7 @@
               <th>Tanggal Lahir</th>
               <th>Tanggal Terdaftar</th>
               <th></th>
+
             </tr>
           </thead>
           <tbody>
@@ -98,6 +99,10 @@
       },
       columns: [{
           name: 'Nama',
+          orderable: true
+        },
+        {
+          name: 'No. HP',
           orderable: true
         },
         {

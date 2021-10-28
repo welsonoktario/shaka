@@ -33,7 +33,7 @@
                     <button id="btnShowDokter" data-id="{{ $dokter->id }}"
                       class="btn btn-sm btn-primary text-white">Detail</button>
                   </td>
-                </tr>
+               </tr>
               @endforeach
             </tbody>
           </table>

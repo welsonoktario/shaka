@@ -25,6 +25,11 @@
       <i class="fas fa-fw fa-user-md"></i>
       <span>Dokter</span></a>
   </li>
+  <li class="nav-item{{ Route::currentRouteName() === 'admin.service.index' ? ' active' : '' }}">
+    <a class="nav-link" href="{{ route('admin.service.index') }}">
+      <i class="fas fa-fw fa-user-md"></i>
+      <span>Service</span></a>
+  </li>
 
   <li class="nav-item{{ Route::currentRouteName() === 'admin.pasien.index' ? ' active' : '' }}">
     <a class="nav-link" href="{{ route('admin.pasien.index') }}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\Dokter;
 use App\Models\Jadwal;
 use App\Models\Pasien;
 use App\Models\Service;
@@ -33,7 +34,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $dokters = User::with('service')->where('role_id', 2)->get();
+        $dokters = Dokter::with('service')->get();
         $pasiens = Pasien::with('user')->get();
 
         return view('admin.booking.create', ['dokters' => $dokters, 'pasiens' => $pasiens]);
@@ -65,12 +66,13 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        $booking = Booking::with(['pasien.user', 'slot.jadwal.dokter.service'])->find($id);
+        $booking = Booking::with(['pasien.user', 'slot.jadwal.dokter.service', 'transaksi'])->find($id);
         $tanggal = Carbon::create($booking->slot->jadwal->start)->toDateString();
         $start = Carbon::create($booking->slot->jadwal->start)->toTimeString();
         $end = Carbon::create($booking->slot->jadwal->end)->toTimeString();
 
         return view('admin.booking.show', [
+            'booking' => $booking,
             'dokter' => $booking->slot->jadwal->dokter,
             'pasien' => $booking->pasien,
             'jadwal' => $booking->slot->jadwal,
