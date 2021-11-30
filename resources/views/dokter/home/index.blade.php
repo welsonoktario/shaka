@@ -142,7 +142,7 @@
       const booking = $('.badge');
       booking.each(function(i, el) {
         switch ($(el).text()) {
-          case "Pending":
+          case "Menunggu Antrian":
             $(el).addClass('bg-warning');
             break;
           case "Diproses":

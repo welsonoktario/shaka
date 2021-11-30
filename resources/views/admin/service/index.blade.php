@@ -27,10 +27,10 @@
                 <td>{{ $ser->nama }}</td>
                 <td>{{ $ser->deskripsi }}</td>
                 <td class="text-center">
-                  <button data-id="{{ $ser->id }}"
-                    class="btn btn-sm btn-primary me-1 text-white btnShowService">Detail</button>
+                  {{-- <button data-id="{{ $ser->id }}"
+                    class="btn btn-sm btn-primary me-1 text-white btnShowService">Detail</button> --}}
                   <button  data-id="{{ $ser->id }}"
-                    class="btn btn-sm btn-secondary ms-1 text-white btnEditService">Edit</button>
+                    class="btn btn-sm btn-secondary text-white btnEditService">Edit</button>
                 </td>
               </tr>
             @endforeach

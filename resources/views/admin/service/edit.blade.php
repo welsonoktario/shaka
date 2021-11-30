@@ -12,7 +12,7 @@
     </div>
     <div class="mb-3">
       <label for="deskripsi" class="form-label">Deskripsi</label>
-      <textarea name="deskripsi" class="form-control" id="deskripsi" value="{{$service->deskripsi}}"></textarea>
+      <textarea name="deskripsi" class="form-control" id="deskripsi" >{{$service->deskripsi}}</textarea>
     </div>
   </div>
   <div class="modal-footer">

@@ -13,6 +13,12 @@
       <dd class="col-8">{{ $dokter->user->nama }}</dd>
     </div>
   </div>
+  <div class="mx-2 mb-3">
+    <div class="row">
+      <dt class="col-4">Email</dt>
+      <dd class="col-8">{{ $dokter->user->email }}</dd>
+    </div>
+  </div>
 
   <div class="mx-2">
     <h5>Servis</h5>

@@ -23,6 +23,11 @@
       <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Jadwal</span></a>
   </li>
+  <li class="nav-item{{ Route::currentRouteName() === 'dokter.jadwal.index' ? ' active' : '' }}">
+    <a class="nav-link" href="{{ route('dokter.jadwal.index') }}">
+      <i class="fas fa-fw fa-calendar-alt"></i>
+      <span>Riwayat</span></a>
+  </li>
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

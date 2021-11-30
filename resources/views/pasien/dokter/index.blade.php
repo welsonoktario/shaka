@@ -14,7 +14,7 @@
               <tr>
                 <th>Nama</th>
                 <th>Servis</th>
-                <th>Tanggal Terdaftar</th>
+                {{-- <th>Tanggal Terdaftar</th> --}}
                 <th></th>
               </tr>
             </thead>
@@ -27,8 +27,8 @@
                       <span class="badge bg-primary">{{ $service->nama }}</span>
                     @endforeach
                   </td>
-                  <td data-order="{{ $dokter->created_at }}">
-                    {{ $dokter->created_at->translatedFormat('d F Y') }}</td>
+                  {{-- <td data-order="{{ $dokter->created_at }}">
+                    {{ $dokter->created_at->translatedFormat('d F Y') }}</td> --}}
                   <td class="text-center">
                     <button id="btnShowDokter" data-id="{{ $dokter->id }}"
                       class="btn btn-sm btn-primary text-white">Detail</button>
@@ -111,10 +111,10 @@
             name: 'Service',
             orderable: false
           },
-          {
-            name: 'Tanggal Terdaftar',
-            orderable: true
-          },
+          // {
+          //   name: 'Tanggal Terdaftar',
+          //   orderable: true
+          // },
           {
             name: '',
             orderable: false

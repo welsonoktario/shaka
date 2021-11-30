@@ -103,8 +103,9 @@ class DokterController extends Controller
     public function update(Request $request, $id)
     {
         $dokter = Dokter::find($id);
+
         $dokter->service()->sync($request->services);
-        $dokter->update([
+        $dokter->user()->update([
             'nama' => $request->nama
         ]);
 

@@ -19,6 +19,10 @@
           <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
           Profile
         </a>
+        {{-- <td class="text-center">
+          <button id="btnShowDokter" data-id="{{ $dokter->id }}"
+            class="btn btn-sm btn-primary text-white">Detail</button>
+        </td> --}}
         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('formLogout').submit();">
           <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
           Logout

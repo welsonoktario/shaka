@@ -17,6 +17,7 @@
           <thead>
             <tr>
               <th>Nama</th>
+              <th>Email</th>
               <th>No. HP</th>
               <th>Alamat</th>
               <th>Tanggal Lahir</th>
@@ -29,6 +30,7 @@
             @foreach ($pasiens as $pasien)
               <tr class="listPasien">
                 <td>{{ $pasien->user->nama }}</td>
+                <td>{{$pasien->user->email}}</td>
                 <td>{{ $pasien->user->no_hp }}</td>
                 <td>{{ $pasien->alamat }}</td>
                 <td>{{ $pasien->tanggal_lahir->translatedFormat('d F Y') }}</td>
@@ -37,6 +39,8 @@
                 <td class="text-center">
                   <button id="btnDetailPasien" class="btn btn-sm btn-primary text-white"
                     data-id="{{ $pasien->id }}">Detail</button>
+                    <button id="btnEditPasien" data-id="{{ $pasien->id }}"
+                      class="btn btn-sm btn-secondary ms-1 text-white">Edit</button>
                 </td>
               </tr>
             @endforeach
@@ -81,6 +85,16 @@
         $('#modalPasienContent').html(res);
       });
     });
+    $('.listPasien #btnEditPasien').click(function() {
+        const id = $(this).data('id');
+        $('#modalPasien').modal('show');
+        $('#modalPasienContent').html('');
+        $('#modalLoading').show();
+        $.get(`pasien/${id}/edit`, function(res) {
+          $('#modalLoading').hide();
+          $('#modalPasienContent').html(res);
+        });
+      });
 
     $('.listPasien #btnDetailPasien').click(function() {
       const id = $(this).data('id');
@@ -102,6 +116,10 @@
           orderable: true
         },
         {
+          name: 'Email',
+          orderable: true
+        },
+        {
           name: 'No. HP',
           orderable: true
         },
@@ -110,7 +128,7 @@
           orderable: false
         },
         {
-          name: 'Tanggal Lahit',
+          name: 'Tanggal Lahir',
           orderable: true
         },
         {
@@ -122,6 +140,7 @@
           orderable: false
         }
       ]
+
     });
   });
 </script>

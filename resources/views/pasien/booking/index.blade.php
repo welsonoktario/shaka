@@ -157,7 +157,7 @@
       }, function(res) {
         if (res === 'ok') {
           const hasil =
-            `<span>Slot ${$(`#slot${slot}`).data('nomor')}: ${user.nama}</span> <span class="badge bg-warning align-middle">Pending</span>`;
+            `<span>Slot ${$(`#slot${slot}`).data('nomor')}: ${user.nama}</span> <span class="badge bg-warning align-middle">Menunggu Antrian</span>`;
           $('#modalBookingContent .btnTambahBooking').each(function() {
             $(this).replaceWith('<span> - </span>');
           });

@@ -99,7 +99,7 @@ class PasienController extends Controller
         $updateUser = $user->update($request->only('nama', 'no_hp', 'email'));
         $updatePasien = $user->pasien->update($request->only('tanggal_lahir', 'alamat'));
 
-        if (!$updateUser && !$updatePasien) return redirect()->route('admin.pasien.index')->with('status', 'Gagal mengubah data pasien');
+        // if (!$updateUser && !$updatePasien) return redirect()->route('admin.pasien.index')->with('status', 'Gagal mengubah data pasien');
 
         return redirect()->route('admin.pasien.index')->with('status', 'Sukses mengubah data pasien');
     }

@@ -26,7 +26,7 @@
                 <td>{{ $booking->tanggal->translatedFormat('d F Y H:i:s') }}</td>
                 <td>{{ $booking->slot->jadwal->dokter->user->nama }}</td>
                 <td>{{ $booking->service->nama }}</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                <td>{{$booking->transaksi->catatan}}</td>
                 <td>{{ 'Rp ' . number_format($booking->transaksi->total, 0, ',', '.') }}</td>
               </tr>
             @endif

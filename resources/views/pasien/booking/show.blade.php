@@ -18,7 +18,7 @@
         <li class="list-group-item">
           <span class="align-middle me-1">Slot {{ $slot->nomor }}: {{ $slot->booking->pasien->user->nama }}</span>
           @switch($slot->booking->status)
-              @case('Pending')
+              @case('Menunggu Antrian')
                 <span class="badge bg-warning align-middle">{{ $slot->booking->status }}</span>
                 @break
               @case('Diproses')

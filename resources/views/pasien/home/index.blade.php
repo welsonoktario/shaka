@@ -83,7 +83,7 @@
           },
           {
             name: 'Catatan',
-            orderable: false
+            orderable: true
           },
         ]
       });
