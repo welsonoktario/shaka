@@ -32,7 +32,7 @@
                   <span class="badge bg-primary">{{ $booking->service->nama }}</span>
                 </td>
                 <td class="text-center">
-                  <button id="btnShowBooking" class="btn btn-sm btn-primary text-white"
+                  <button class="btnShowBooking btn btn-sm btn-primary text-white"
                     data-id="{{ $booking->id }}">Detail</button>
                 </td>
               </tr>
@@ -107,7 +107,7 @@
       });
     });
 
-    $('.listBooking #btnShowBooking').click(function() {
+    $('.btnShowBooking').click(function() {
       const id = $(this).data('id');
       $('#modalBooking').modal('show');
       $('#modalBookingContent').html('');

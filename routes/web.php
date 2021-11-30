@@ -54,6 +54,11 @@ Route::group(['prefix' => 'dokter', 'middleware' => ['web', 'dokter']], function
         'only' => ['index', 'show'],
         'as' => 'dokter'
     ]);
+
+    Route::resource('pasien', 'Dokter\PasienController', [
+        'only' => ['index', 'show'],
+        'as' => 'dokter'
+    ]);
 });
 
 Route::group(['prefix' => 'pasien', 'middleware' => 'web'], function () {

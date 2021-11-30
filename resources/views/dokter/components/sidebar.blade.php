@@ -23,10 +23,10 @@
       <i class="fas fa-fw fa-calendar-alt"></i>
       <span>Jadwal</span></a>
   </li>
-  <li class="nav-item{{ Route::currentRouteName() === 'dokter.jadwal.index' ? ' active' : '' }}">
-    <a class="nav-link" href="{{ route('dokter.jadwal.index') }}">
+  <li class="nav-item{{ Route::currentRouteName() === 'dokter.pasien.index' ? ' active' : '' }}">
+    <a class="nav-link" href="{{ route('dokter.pasien.index') }}">
       <i class="fas fa-fw fa-calendar-alt"></i>
-      <span>Riwayat</span></a>
+      <span>Pasien</span></a>
   </li>
 
   <!-- Divider -->
