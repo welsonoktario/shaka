@@ -26,9 +26,10 @@ class HomeController extends Controller
 
         foreach ($jadwals as $key => $jadwal) {
             $antrian = $jadwal->slot->filter(
-                fn ($slot) => ($slot->booking != null && $slot->booking->status == 'Pending' ||
-                    $slot->booking != null && $slot->booking->status == 'Diproses')
+                fn ($slot) => ($slot->booking && $slot->booking->status == 'Menunggu Antrian' ||
+                    $slot->booking && $slot->booking->status == 'Diproses')
             );
+            error_log($antrian);
             $antrians = [
                 'nomor' => count($antrian) ? $antrian->first()->nomor : '-',
                 'pertama' => count($antrian) ? $antrian->first()->nomor : '-',

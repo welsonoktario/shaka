@@ -25,7 +25,7 @@ class CreateBookingsTable extends Migration
             $table->foreignId('service_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->enum('status', ['Pending', 'Diproses', 'Dilewati', 'Selesai']);
+            $table->enum('status', ['Menunggu Antrian', 'Diproses', 'Dilewati', 'Selesai']);
             $table->dateTime('tanggal')->useCurrent();
         });
     }
