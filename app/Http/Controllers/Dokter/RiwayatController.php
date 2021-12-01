@@ -18,30 +18,9 @@ class RiwayatController extends Controller
     {
         $transaksis = Transaksi::with(['booking.service', 'booking.pasien.user'])->whereHas('booking.dokter', function ($q) {
             return $q->where('user_id', Auth::id());
-        })->get();
+        })->orderBy('tanggal', 'DESC')->get();
 
-        return $transaksis;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('dokter.riwayat.index', ['transaksis' => $transaksis]);
     }
 
     /**
@@ -52,40 +31,8 @@ class RiwayatController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $transaksi = Transaksi::with(['booking.pasien.user', 'booking.service'])->find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('dokter.riwayat.show', ['transaksi' => $transaksi]);
     }
 }

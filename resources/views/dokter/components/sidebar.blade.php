@@ -29,6 +29,12 @@
       <span>Pasien</span></a>
   </li>
 
+  <li class="nav-item{{ Route::currentRouteName() === 'dokter.riwayat.index' ? ' active' : '' }}">
+    <a class="nav-link" href="{{ route('dokter.riwayat.index') }}">
+      <i class="fas fa-fw fa-history"></i>
+      <span>Riwayat</span></a>
+  </li>
+
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
 
