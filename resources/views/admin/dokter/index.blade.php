@@ -34,10 +34,12 @@
                   <td data-order="{{ $dokter->created_at }}">
                     {{ $dokter->created_at->translatedFormat('d F Y') }}</td>
                   <td class="text-center">
-                    <button id="btnShowDokter" data-id="{{ $dokter->id }}"
-                      class="btn btn-sm btn-primary me-1 text-white">Detail</button>
-                    <button id="btnEditDokter" data-id="{{ $dokter->id }}"
-                      class="btn btn-sm btn-secondary ms-1 text-white">Edit</button>
+                    <button data-id="{{ $dokter->id }}"
+                      class="btnShowDokter btn btn-sm btn-primary me-1 text-white">Detail</button>
+                    <button data-id="{{ $dokter->id }}"
+                      class="btnShowRiwayatDokter btn btn-sm btn-secondary me-1 text-white">Riwayat</button>
+                    <button data-id="{{ $dokter->id }}"
+                      class="btnEditDokter btn btn-sm btn-warning ms-1 text-white">Edit</button>
                   </td>
                 </tr>
               @endforeach
@@ -83,8 +85,9 @@
         });
       });
 
-      $('.listDokter #btnShowDokter').click(function() {
+      $('.listDokter .btnShowDokter').click(function() {
         const id = $(this).data('id');
+        $('.modal-dialog').removeClass('modal-lg');
         $('#modalDokter').modal('show');
         $('#modalDokterContent').html('');
         $('#modalLoading').show();
@@ -94,8 +97,21 @@
         });
       });
 
-      $('.listDokter #btnEditDokter').click(function() {
+      $('.listDokter .btnShowRiwayatDokter').click(function() {
         const id = $(this).data('id');
+        $('.modal-dialog').addClass('modal-lg');
+        $('#modalDokter').modal('show');
+        $('#modalDokterContent').html('');
+        $('#modalLoading').show();
+        $.get(`dokter/${id}/riwayat`, function(res) {
+          $('#modalLoading').hide();
+          $('#modalDokterContent').html(res);
+        });
+      });
+
+      $('.listDokter .btnEditDokter').click(function() {
+        const id = $(this).data('id');
+        $('.modal-dialog').removeClass('modal-lg');
         $('#modalDokter').modal('show');
         $('#modalDokterContent').html('');
         $('#modalLoading').show();

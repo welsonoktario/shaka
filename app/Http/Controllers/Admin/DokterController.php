@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Dokter;
 use App\Models\Service;
+use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -76,6 +77,18 @@ class DokterController extends Controller
         $dokter = Dokter::with(['user', 'service', 'jadwal'])->find($id);
 
         return view('admin.dokter.show', ['dokter' => $dokter]);
+    }
+
+    public function showRiwayat($id)
+    {
+        $transaksis = Transaksi::with([
+            'booking.service',
+            'booking.pasien.user'
+        ])->whereHas('dokter', function ($q) use ($id) {
+            return $q->where('dokters.id', $id);
+        })->get();
+
+        return view('admin.dokter.riwayat', ['transaksis' => $transaksis]);
     }
 
     /**

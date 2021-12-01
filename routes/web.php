@@ -34,6 +34,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
         Route::get('slot-jadwal/{id}', 'Admin\BookingController@slotJadwal')->name('admin.booking.slotJadwal');
     });
 
+    Route::prefix('dokter')->group(function() {
+        Route::get('{id}/riwayat', 'Admin\DokterController@showRiwayat')->name('admin.dokter.riwayat');
+    });
+
     Route::resource('dokter', 'Admin\DokterController', ['as' => 'admin']);
     Route::resource('service', 'Admin\ServiceController', ['as' => 'admin']);
     Route::resource('pasien', 'Admin\PasienController', ['as' => 'admin']);
