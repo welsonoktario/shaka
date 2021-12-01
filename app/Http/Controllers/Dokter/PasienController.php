@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dokter;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pasien;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,15 +36,19 @@ class PasienController extends Controller
      */
     public function show($id)
     {
-        $pasien = Pasien::with([
-            'user',
+        $transaksis = Transaksi::with([
+            'booking.pasien.user',
             'booking' => function ($q) {
                 return $q->where('status', 'Selesai');
             },
             'booking.service',
             'booking.transaksi'
-        ])->find($id);
+        ])->whereHas('booking.dokter', function ($q) {
+            return $q->where('user_id', Auth::id());
+        })->whereHas('booking.pasien', function ($q) use ($id) {
+            return $q->where('id', $id);
+        })->get();
 
-        return view('dokter.pasien.show', ['pasien' => $pasien]);
+        return view('dokter.pasien.show', ['transaksis' => $transaksis]);
     }
 }

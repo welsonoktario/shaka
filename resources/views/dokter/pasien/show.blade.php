@@ -19,15 +19,13 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($pasien->booking as $booking)
-            @if ($booking->status == 'Selesai')
-              <tr>
-                <td>{{ $booking->tanggal->translatedFormat('d F Y H:i:s') }}</td>
-                <td>{{ $booking->service->nama }}</td>
-                <td>{{$booking->transaksi->catatan}}</td>
-                <td>{{ 'Rp ' . number_format($booking->transaksi->total, 0, ',', '.') }}</td>
-              </tr>
-            @endif
+          @foreach ($transaksis as $transaksi)
+            <tr>
+              <td>{{ $transaksi->booking->tanggal->translatedFormat('d F Y H:i:s') }}</td>
+              <td>{{ $transaksi->booking->service->nama }}</td>
+              <td>{{ $transaksi->booking->transaksi->catatan }}</td>
+              <td>{{ 'Rp ' . number_format($transaksi->total, 0, ',', '.') }}</td>
+            </tr>
           @endforeach
         </tbody>
       </table>
